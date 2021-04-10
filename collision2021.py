@@ -826,10 +826,11 @@ for k in range(timestep):
 X2,Y2 = np.meshgrid(pal_v,per_v)
 cont_lev = np.linspace(-10,0,25)
 
-p = lmfit.Parameters()
-p.add_many(('nc', 0.9,True,0.5,1),('ns', 0.05,True,0,0.5), ('Tc_pal', 5*10**5,True,1*10**5,10*10**5),('Tc_per', 5*10**5,True,1*10**5,10*10**5), ('Ts_pal', 8*10**5,True,1*10**5,10*10**5), ('Ts_per', 8*10**5,True,1*10**5,10*10**5), ('Uc',-0.1,True,-0.4,0),('Us',0.1,True,0,1.5),('kappac',3,True,2,10),('kappas',3,True,2,10))
  
 for r in range(Nr):
+    p = lmfit.Parameters()
+    p.add_many(('nc', 0.9,True,0.5,1),('ns', 0.05,True,0,0.5), ('Tc_pal', 5*10**5,True,1*10**5,10*10**5),('Tc_per', 5*10**5,True,1*10**5,10*10**5), ('Ts_pal', 8*10**5,True,1*10**5,10*10**5), ('Ts_per', 8*10**5,True,1*10**5,10*10**5), ('Uc',-0.1,True,-0.4,0),('Us',r*0.05,True,0,1.5),('kappac',3,True,2,10),('kappas',3,True,2,10))
+
     print(r)
     f_11=np.zeros(shape = (Nv**2, 1))
     for j in range(Nv):
