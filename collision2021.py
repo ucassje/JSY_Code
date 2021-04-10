@@ -22,7 +22,7 @@ Nv=30  #velocity step number
 i_solar_r=5 #10
 f_solar_r=20 #30
 path_home="/Users/user/Desktop/JSY_Code/"
-path_lab="/disk/plasma4/syj2/Code/JSY_Code/"
+path_lab="/disk/plasma4/syj2/Code/JSY_Code/JSY_Code/"
 # path_current=path_home
 path_current=path_lab
 def n_0(r):
