@@ -1198,10 +1198,10 @@ plt.clf()
 plt.close()
 
 
-for r in range(Nr):
-        print(U_solar(z[r]))
-print("o")
-print(Bulk)
+#for r in range(Nr):
+#        print(U_solar(z[r]))
+#print("o")
+#print(Bulk)
 
 P_flux=np.zeros(shape = (Nr))
 for r in range(Nr):
