@@ -827,8 +827,8 @@ X2,Y2 = np.meshgrid(pal_v,per_v)
 cont_lev = np.linspace(-10,0,25)
 
 p = lmfit.Parameters()
-p.add_many(('nc', 0.9,True,0.5,1),('ns', 0.05,True,0,0.5),('nh', 0.2,True,0,0.5), ('Tc_pal', 5*10**5,True,1*10**5,10*10**5),('Tc_per', 5*10**5,True,1*10**5,10*10**5), ('Ts_pal', 8*10**5,True,1*10**5,10*10**5), ('Ts_per', 8*10**5,True,1*10**5,10*10**5),('Th_pal', 5*10**5,True,1*10**5,10*10**5),('Th_per', 5*10**5,True,1*10**5,10*10**5), ('Uc',-0.1,True,-0.4,0),('Us',0.1),('Uh',-0.1,True,-0.4,0), ('kappah',3,True,2,10),('kappas',3,True,2,10))
- #p.add_many(('nc', 0.9,True,0,1),('ns', 0.1,True,0,1), ('Tc_pal', 9*10**5),('Tc_per', 9*10**5), ('Ts_pal', 9*10**5), ('Ts_per', 9*10**5), ('Uc',-0.05),('Us',1.5), ('kappa',3))
+p.add_many(('nc', 0.9,True,0.5,1),('ns', 0.05,True,0,0.5), ('Tc_pal', 5*10**5,True,1*10**5,10*10**5),('Tc_per', 5*10**5,True,1*10**5,10*10**5), ('Ts_pal', 8*10**5,True,1*10**5,10*10**5), ('Ts_per', 8*10**5,True,1*10**5,10*10**5), ('Uc',-0.1,True,-0.4,0),('Us',0.1,True,0,1.5),('kappac',3,True,2,10),('kappas',3,True,2,10))
+ 
 for r in range(Nr):
     print(r)
     f_11=np.zeros(shape = (Nv**2, 1))
@@ -840,7 +840,7 @@ for r in range(Nr):
         fitting=np.zeros(shape = (Nv**2, 1))
         for j in range(Nv):
             for i in range(Nv):
-                fitting[j*Nv+i]=((v['nc']*(U_f/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(1/np.pi**(3/2))*(v_th_function(v['Tc_pal'])*v_th_function(v['Tc_per'])**2)**(-1)*np.exp(-(per_v[j])**2/v_th_function(v['Tc_per'])**2)*np.exp(-(pal_v[i]-v['Uc'])**2/v_th_function(v['Tc_pal'])**2))+(v['nh'])*(U_f/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Th_pal'])*v_th_function(v['Th_per'])**2)**(-1)*(2/(np.pi*(2*v['kappah']-3)))**1.5*(gamma(v['kappah']+1)/gamma(v['kappah']-0.5))*(1.+(2/(2*v['kappah']-3))*(((per_v[j])/v_th_function(v['Th_per']))**2)+(2/(2*v['kappah']-3))*(((pal_v[i]-v['Uh'])/v_th_function(v['Th_pal']))**2))**(-v['kappah']-1.)+(v['ns'])*(U_f/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Ts_pal'])*v_th_function(v['Ts_per'])**2)**(-1)*(2/(np.pi*(2*v['kappas']-3)))**1.5*(gamma(v['kappas']+1)/gamma(v['kappas']-0.5))*(1.+(2/(2*v['kappas']-3))*(((per_v[j])/v_th_function(v['Ts_per']))**2)+(2/(2*v['kappas']-3))*(((pal_v[i]-v['Us'])/v_th_function(v['Ts_pal']))**2))**(-v['kappas']-1.))   #(v_th_function(Ts_pal)*v_th_function(Ts_per)**2)**(-1)*np.exp(-b**2/v_th_function(Ts_per)**2)*np.exp(-(a-Us)**2/v_th_function(Ts_pal)**2)
+                fitting[j*Nv+i]=(v['nc'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Tc_pal'])*v_th_function(v['Tc_per'])**2)**(-1)*(2/(np.pi*(2*v['kappac']-3)))**1.5*(gamma(v['kappac']+1)/gamma(v['kappac']-0.5))*(1.+(2/(2*v['kappac']-3))*(((per_v[j])/v_th_function(v['Tc_per']))**2)+(2/(2*v['kappac']-3))*(((pal_v[i]-v['Uc'])/v_th_function(v['Tc_pal']))**2))**(-v['kappac']-1.))+(v['ns'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Ts_pal'])*v_th_function(v['Ts_per'])**2)**(-1)*(2/(np.pi*(2*v['kappas']-3)))**1.5*(gamma(v['kappas']+1)/gamma(v['kappas']-0.5))*(1.+(2/(2*v['kappas']-3))*(((per_v[j])/v_th_function(v['Ts_per']))**2)+(2/(2*v['kappas']-3))*(((pal_v[i]-v['Us'])/v_th_function(v['Ts_pal']))**2))**(-v['kappas']-1.))   #(v_th_function(Ts_pal)*v_th_function(Ts_per)**2)**(-1)*np.exp(-b**2/v_th_function(Ts_per)**2)*np.exp(-(a-Us)**2/v_th_function(Ts_pal)**2)
         return np.log10(fitting)-np.log10(f_11)
 
     mi = lmfit.minimize(residual, p, method='nelder', options={'maxiter' : 2000}, nan_policy='omit')
