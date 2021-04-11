@@ -807,27 +807,27 @@ for k in range(timestep):
     Normvalue[k]=norm**0.5
     print(norm**0.5)
 
-#f_temp3=np.zeros(shape = (Nr*Nv**2, 1))
-#for q in range(Nr):                               #VON neumann boundary condition for r-derivative
-#        for j in range(Nv):
-#                for i in range(Nv):
-#                        if q==Nr-1:
-#                                kappa=50
-#                                f_temp3[q*(Nv)*(Nv)+j*Nv+i]=np.max(f_1)*10**(2*np.log10(f_1[(q-1)*(Nv)*(Nv)+(j)*Nv+i]*ratio_r[(q-1)*(Nv)*(Nv)+j*Nv+i]**(-1)/np.max(f_1))-np.log10(f_1[(q-2)*(Nv)*(Nv)+(j)*Nv+i]*ratio_r[(q-2)*(Nv)*(Nv)+j*Nv+i]**(-1)*ratio_r[(q-1)*(Nv)*(Nv)+j*Nv+i]**(-1)/np.max(f_1))) #f_1[(q-1)*(Nv)*(Nv)+j*Nv+i]+delz*f_1[(q-1)*(Nv)*(Nv)+j*Nv+i]*(lnn(z[q-1])-(1/U_solar(z[q-1]))*dU_solar(z[q-1])-(3/2)*lntemperature(z[q-1])+(2*(kappa+1)/(2*kappa-3))*(per_v[j]**2/v_th_function(Temperat_per[q-1])**2+pal_v[i]**2/v_th_function(Temperat_pal[q-1])**2)*lntemperature(z[q-1])*(1.+(2/(2*kappa-3))*((per_v[j]/v_th_function(Temperat_per[q-1]))**2)+(2/(2*kappa-3))*((pal_v[i]/v_th_function(Temperat_pal[q-1]))**2))**(-1.)) #(per_v[j]**2*U_solar(z[q-1])/(2*(U_solar(z[q-1])+cos(z[q-1])*pal_v[i])*v_th_function(Temperat_per[q-1]))*(4*(kappa+1)/(2*kappa-3))*dlnB(z[q-1]))*(1.+(2/(2*kappa-3))*((per_v[j]/v_th_function(Temperat_per[q-1]))**2)+(2/(2*kappa-3))*((pal_v[i]/v_th_function(Temperat_pal[q-1]))**2))**(-1.)
-#                            #elif q==2:
+f_temp3=np.zeros(shape = (Nr*Nv**2, 1))
+for q in range(Nr):                               #VON neumann boundary condition for r-derivative
+        for j in range(Nv):
+                for i in range(Nv):
+                        if q==Nr-1:
+                                kappa=50
+                                f_temp3[q*(Nv)*(Nv)+j*Nv+i]=np.max(f_1)*10**(2*np.log10(f_1[(q-1)*(Nv)*(Nv)+(j)*Nv+i]*ratio_r[(q-1)*(Nv)*(Nv)+j*Nv+i]**(-1)/np.max(f_1))-np.log10(f_1[(q-2)*(Nv)*(Nv)+(j)*Nv+i]*ratio_r[(q-2)*(Nv)*(Nv)+j*Nv+i]**(-1)*ratio_r[(q-1)*(Nv)*(Nv)+j*Nv+i]**(-1)/np.max(f_1))) #f_1[(q-1)*(Nv)*(Nv)+j*Nv+i]+delz*f_1[(q-1)*(Nv)*(Nv)+j*Nv+i]*(lnn(z[q-1])-(1/U_solar(z[q-1]))*dU_solar(z[q-1])-(3/2)*lntemperature(z[q-1])+(2*(kappa+1)/(2*kappa-3))*(per_v[j]**2/v_th_function(Temperat_per[q-1])**2+pal_v[i]**2/v_th_function(Temperat_pal[q-1])**2)*lntemperature(z[q-1])*(1.+(2/(2*kappa-3))*((per_v[j]/v_th_function(Temperat_per[q-1]))**2)+(2/(2*kappa-3))*((pal_v[i]/v_th_function(Temperat_pal[q-1]))**2))**(-1.)) #(per_v[j]**2*U_solar(z[q-1])/(2*(U_solar(z[q-1])+cos(z[q-1])*pal_v[i])*v_th_function(Temperat_per[q-1]))*(4*(kappa+1)/(2*kappa-3))*dlnB(z[q-1]))*(1.+(2/(2*kappa-3))*((per_v[j]/v_th_function(Temperat_per[q-1]))**2)+(2/(2*kappa-3))*((pal_v[i]/v_th_function(Temperat_pal[q-1]))**2))**(-1.)
+                            #elif q==2:
                             #        f_temp3[q*(Nv)*(Nv)+j*Nv+i]=2*f_1[(q-1)*(Nv)*(Nv)+(j)*Nv+i]-f_1[(q-2)*(Nv)*(Nv)+(j)*Nv+i]
-#for q in range(Nr):
-#        for j in range(Nv):
-#                for i in range(Nv):
-#                        if q==Nr-1:
-#                                f_1[q*(Nv)*(Nv)+j*Nv+i]=f_temp3[(q)*(Nv)*(Nv)+j*Nv+i]
+for q in range(Nr):
+        for j in range(Nv):
+                for i in range(Nv):
+                        if q==Nr-1:
+                                f_1[q*(Nv)*(Nv)+j*Nv+i]=f_temp3[(q)*(Nv)*(Nv)+j*Nv+i]
 
 
-#f_shift=np.zeros(shape = (Nr*Nv**2, 1))
-#f_shift[:,:]=f_1[:,:]
-#for q in range(Nr):
-#            for j in range(Nv):
-#                    for i in range(Nv):
+f_shift=np.zeros(shape = (Nr*Nv**2, 1))
+f_shift[:,:]=f_1[:,:]
+for q in range(Nr):
+            for j in range(Nv):
+                    for i in range(Nv):
 
 
 
@@ -835,85 +835,85 @@ X2,Y2 = np.meshgrid(pal_v,per_v)
 cont_lev = np.linspace(-10,0,25)
 
  
-#for r in range(Nr):
-#    p = lmfit.Parameters()
-#    p.add_many(('nc', 0.9,True,0.5,1),('ns', 0.05,True,0,0.5), ('Tc_pal', 5*10**5,True,1*10**5,10*10**5),('Tc_per', 5*10**5,True,1*10**5,10*10**5), ('Ts_pal', 8*10**5,True,1*10**5,10*10**5), ('Ts_per', 8*10**5,True,1*10**5,10*10**5), ('Uc',-0.1,True,-0.4,0),('Us',r*0.05,True,0,1.5),('kappac',3,True,2,10),('kappas',3,True,2,10))
+for r in range(Nr):
+    p = lmfit.Parameters()
+    p.add_many(('nc', 0.9,True,0.5,1),('ns', 0.05,True,0,0.5), ('Tc_pal', 5*10**5,True,1*10**5,10*10**5),('Tc_per', 5*10**5,True,1*10**5,10*10**5), ('Ts_pal', 8*10**5,True,1*10**5,10*10**5), ('Ts_per', 8*10**5,True,1*10**5,10*10**5), ('Uc',-0.1,True,-0.4,0),('Us',r*0.05,True,0,1.5),('kappac',10,True,8,20),('kappas',3,True,2,10))
 
-#    print(r)
-#    f_11=np.zeros(shape = (Nv**2, 1))
-#    for j in range(Nv):
-#            for i in range(Nv):
-#                f_11[j*Nv+i]=f_1[r*(Nv)*(Nv)+j*Nv+i]
-#    def residual(p):
-#        v=p.valuesdict()
-#        fitting=np.zeros(shape = (Nv**2, 1))
-#        for j in range(Nv):
-#            for i in range(Nv):
-#                fitting[j*Nv+i]=(v['nc'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Tc_pal'])*v_th_function(v['Tc_per'])**2)**(-1)*(2/(np.pi*(2*v['kappac']-3)))**1.5*(gamma(v['kappac']+1)/gamma(v['kappac']-0.5))*(1.+(2/(2*v['kappac']-3))*(((per_v[j])/v_th_function(v['Tc_per']))**2)+(2/(2*v['kappac']-3))*(((pal_v[i]-v['Uc'])/v_th_function(v['Tc_pal']))**2))**(-v['kappac']-1.)+(v['ns'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Ts_pal'])*v_th_function(v['Ts_per'])**2)**(-1)*(2/(np.pi*(2*v['kappas']-3)))**1.5*(gamma(v['kappas']+1)/gamma(v['kappas']-0.5))*(1.+(2/(2*v['kappas']-3))*(((per_v[j])/v_th_function(v['Ts_per']))**2)+(2/(2*v['kappas']-3))*(((pal_v[i]-v['Us'])/v_th_function(v['Ts_pal']))**2))**(-v['kappas']-1.)
-#        return np.log10(fitting)-np.log10(f_11)
+    print(r)
+    f_11=np.zeros(shape = (Nv**2, 1))
+    for j in range(Nv):
+            for i in range(Nv):
+                f_11[j*Nv+i]=f_1[r*(Nv)*(Nv)+j*Nv+i]
+    def residual(p):
+        v=p.valuesdict()
+        fitting=np.zeros(shape = (Nv**2, 1))
+        for j in range(Nv):
+            for i in range(Nv):
+                fitting[j*Nv+i]=(v['nc'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Tc_pal'])*v_th_function(v['Tc_per'])**2)**(-1)*(2/(np.pi*(2*v['kappac']-3)))**1.5*(gamma(v['kappac']+1)/gamma(v['kappac']-0.5))*(1.+(2/(2*v['kappac']-3))*(((per_v[j])/v_th_function(v['Tc_per']))**2)+(2/(2*v['kappac']-3))*(((pal_v[i]-v['Uc'])/v_th_function(v['Tc_pal']))**2))**(-v['kappac']-1.)+(v['ns'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Ts_pal'])*v_th_function(v['Ts_per'])**2)**(-1)*(2/(np.pi*(2*v['kappas']-3)))**1.5*(gamma(v['kappas']+1)/gamma(v['kappas']-0.5))*(1.+(2/(2*v['kappas']-3))*(((per_v[j])/v_th_function(v['Ts_per']))**2)+(2/(2*v['kappas']-3))*(((pal_v[i]-v['Us'])/v_th_function(v['Ts_pal']))**2))**(-v['kappas']-1.)
+        return np.log10(fitting)-np.log10(f_11)
 
-#    mi = lmfit.minimize(residual, p, method='nelder', options={'maxiter' : 2000}, nan_policy='omit')
-#    lmfit.printfuncs.report_fit(mi.params, min_correl=0.5)
+    mi = lmfit.minimize(residual, p, method='nelder', options={'maxiter' : 2000}, nan_policy='omit')
+    lmfit.printfuncs.report_fit(mi.params, min_correl=0.5)
 
-#    if r==0:
-#        fitting_max=np.max(10**(residual(mi.params))*f_11)
-#        original_max=np.max(f_11)
+    if r==0:
+        fitting_max=np.max(10**(residual(mi.params))*f_11)
+        original_max=np.max(f_11)
 
-#    solu1=np.zeros(shape = (Nv, Nv))
-#    for j in range(Nv):
-#        for i in range(Nv):
-#            solu1[j,i]=np.log10((10**(residual(mi.params)[j*Nv+i])*f_11[j*Nv+i])/fitting_max)
-#    fig = plt.figure()
-#    fig.set_dpi(500)
-#    plt.contourf(X2, Y2, solu1, cont_lev,cmap='Blues');
-#    ax = plt.gca()
-#    ax.spines['left'].set_position('center')
-#    ax.spines['left'].set_smart_bounds(True)
-#    ax.spines['bottom'].set_position('zero')
-#    ax.spines['bottom'].set_smart_bounds(True)
-#    ax.spines['right'].set_color('none')
-#    ax.spines['top'].set_color('none')
-#    ax.xaxis.set_ticks_position('bottom')
-#    plt.axis('equal')
-#    ax.xaxis.set_ticks_position('bottom')
-#    ax.yaxis.set_ticks_position('left')
-#    plt.rc('font', size=8)
-#    plt.tick_params(labelsize=8)
-#    plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
-#    plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
-#    plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[r], fontsize=8)
-#    plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
-#    plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
-#    plt.colorbar(label=r'$Log(F/F_{MAX})$')
-#    plt.savefig(f'{path_current}fitting/{r}.png')
-#    plt.clf()
-#    plt.close()
+    solu1=np.zeros(shape = (Nv, Nv))
+    for j in range(Nv):
+        for i in range(Nv):
+            solu1[j,i]=np.log10((10**(residual(mi.params)[j*Nv+i])*f_11[j*Nv+i])/fitting_max)
+    fig = plt.figure()
+    fig.set_dpi(500)
+    plt.contourf(X2, Y2, solu1, cont_lev,cmap='Blues');
+    ax = plt.gca()
+    ax.spines['left'].set_position('center')
+    ax.spines['left'].set_smart_bounds(True)
+    ax.spines['bottom'].set_position('zero')
+    ax.spines['bottom'].set_smart_bounds(True)
+    ax.spines['right'].set_color('none')
+    ax.spines['top'].set_color('none')
+    ax.xaxis.set_ticks_position('bottom')
+    plt.axis('equal')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.yaxis.set_ticks_position('left')
+    plt.rc('font', size=8)
+    plt.tick_params(labelsize=8)
+    plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
+    plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
+    plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[r], fontsize=8)
+    plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
+    plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
+    plt.colorbar(label=r'$Log(F/F_{MAX})$')
+    plt.savefig(f'{path_current}fitting/{r}.png')
+    plt.clf()
+    plt.close()
 
-#    solu2=np.zeros(shape = (Nv))
+    solu2=np.zeros(shape = (Nv))
 
-#    for i in range(Nv):
-#        solu2[i]=np.log10((10**(residual(mi.params)[15*Nv+i])*f_11[15*Nv+i])/fitting_max)
-#    fig = plt.figure()
-#    fig.set_dpi(500)
-#    plt.plot(pal_v,solu2,color='k',label=r'$r/r_s=$' "%.2f" % z[r]);
-#    plt.legend(loc='upper right')
-#    plt.grid()
-#    ax = plt.gca()
-#    ax.spines['left'].set_position('center')
-#    ax.spines['right'].set_color('none')
-#    ax.spines['top'].set_color('none')
-#    ax.xaxis.set_ticks_position('bottom')
-#    ax.yaxis.set_ticks_position('left')
-#    ax.set_yticks([-8,-6,-4,-2,-0])
-#    plt.text(-2*delv,-8.7,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=12)
-#    plt.text(-2*delv,2*delv,r'$Log(F/F_{MAX})$', fontsize=12)
-#    plt.ylim([-8, 0])
-#    plt.xlim([-Mv, Mv])
-#    plt.rc('font', size=8)
-#    plt.tick_params(labelsize=8)
-#    plt.savefig(f'{path_current}fitting/1D/{r}.png')
-#    plt.clf()
-#    plt.close()
+    for i in range(Nv):
+        solu2[i]=np.log10((10**(residual(mi.params)[15*Nv+i])*f_11[15*Nv+i])/fitting_max)
+    fig = plt.figure()
+    fig.set_dpi(500)
+    plt.plot(pal_v,solu2,color='k',label=r'$r/r_s=$' "%.2f" % z[r]);
+    plt.legend(loc='upper right')
+    plt.grid()
+    ax = plt.gca()
+    ax.spines['left'].set_position('center')
+    ax.spines['right'].set_color('none')
+    ax.spines['top'].set_color('none')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.yaxis.set_ticks_position('left')
+    ax.set_yticks([-8,-6,-4,-2,-0])
+    plt.text(-2*delv,-8.7,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=12)
+    plt.text(-2*delv,2*delv,r'$Log(F/F_{MAX})$', fontsize=12)
+    plt.ylim([-8, 0])
+    plt.xlim([-Mv, Mv])
+    plt.rc('font', size=8)
+    plt.tick_params(labelsize=8)
+    plt.savefig(f'{path_current}fitting/1D/{r}.png')
+    plt.clf()
+    plt.close()
 
 number=0
 num=np.zeros(shape = (Nv))
