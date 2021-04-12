@@ -815,8 +815,8 @@ X2,Y2 = np.meshgrid(pal_v,per_v)
 cont_lev = np.linspace(-10,0,25)
 
 p = lmfit.Parameters()
-p.add_many(('nc', 0.9,True,0.7,1),('ns', 0.01,True,0,0.05), ('Tc_pal', 5*10**5,True,1*10**5,10*10**5), ('Ts_pal', 8*10**5,True,1*10**5,10*10**5), ('Ts_per', 8*10**5,True,1*10**5,10*10**5), ('Uc',-0.1,True,-0.4,0),('Us',0.8,True,0.6,1.5),('kappac',10,True,8,20),('kappas',3,True,2,10))
-
+p.add_many(('nc', 0.9,True,0.7,1), ('Tc_pal', 5*10**5,True,1*10**5,10*10**5), ('Ts_pal', 8*10**5,True,1*10**5,10*10**5), ('Ts_per', 8*10**5,True,1*10**5,10*10**5), ('Uc',-0.1,True,-0.4,0),('Us',0.8,True,0.6,1.5),('kappac',10,True,8,20),('kappas',3,True,2,10))
+#('ns', 0.01,True,0,0.05)
  
 for r in range(Nr):
     print(r)
@@ -829,7 +829,7 @@ for r in range(Nr):
         fitting=np.zeros(shape = (Nv**2, 1))
         for j in range(Nv):
             for i in range(Nv):
-                fitting[j*Nv+i]=(v['nc'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Tc_pal'])*v_th_function(v['Tc_pal'])**2)**(-1)*(2/(np.pi*(2*v['kappac']-3)))**1.5*(gamma(v['kappac']+1)/gamma(v['kappac']-0.5))*(1.+(2/(2*v['kappac']-3))*(((per_v[j])/v_th_function(v['Tc_pal']))**2)+(2/(2*v['kappac']-3))*(((pal_v[i]-v['Uc'])/v_th_function(v['Tc_pal']))**2))**(-v['kappac']-1.)+(v['ns'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Ts_pal'])*v_th_function(v['Ts_per'])**2)**(-1)*(2/(np.pi*(2*v['kappas']-3)))**1.5*(gamma(v['kappas']+1)/gamma(v['kappas']-0.5))*(1.+(2/(2*v['kappas']-3))*(((per_v[j])/v_th_function(v['Ts_per']))**2)+(2/(2*v['kappas']-3))*(((pal_v[i]-v['Us'])/v_th_function(v['Ts_pal']))**2))**(-v['kappas']-1.)
+                fitting[j*Nv+i]=(v['nc'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Tc_pal'])*v_th_function(v['Tc_pal'])**2)**(-1)*(2/(np.pi*(2*v['kappac']-3)))**1.5*(gamma(v['kappac']+1)/gamma(v['kappac']-0.5))*(1.+(2/(2*v['kappac']-3))*(((per_v[j])/v_th_function(v['Tc_pal']))**2)+(2/(2*v['kappac']-3))*(((pal_v[i]-v['Uc'])/v_th_function(v['Tc_pal']))**2))**(-v['kappac']-1.)+(1-v['nc'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Ts_pal'])*v_th_function(v['Ts_per'])**2)**(-1)*(2/(np.pi*(2*v['kappas']-3)))**1.5*(gamma(v['kappas']+1)/gamma(v['kappas']-0.5))*(1.+(2/(2*v['kappas']-3))*(((per_v[j])/v_th_function(v['Ts_per']))**2)+(2/(2*v['kappas']-3))*(((pal_v[i]-v['Us'])/v_th_function(v['Ts_pal']))**2))**(-v['kappas']-1.)
         return np.log10(fitting)-np.log10(f_11)
 
     mi = lmfit.minimize(residual, p, method='nelder', options={'maxiter' : 2000}, nan_policy='omit')
