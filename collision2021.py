@@ -837,7 +837,6 @@ for r in range(Nr):
 
     zx =  mi.params
     nc = zx['nc'].value
-    ns = zx['ns'].value
     Tc_pal = zx['Tc_pal'].value
     Ts_pal = zx['Ts_pal'].value
     Ts_per = zx['Ts_per'].value
@@ -876,7 +875,6 @@ for r in range(Nr):
     plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
     plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-1], r'$nc=$' "%.2f" % nc, fontsize=8)
-    plt.text(pal_v[0],pal_v[Nv-2], r'$ns=$' "%.2f" % ns, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-3], r'$Tc=$' "%.2f" % Tc_pal, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-4], r'$Ts_{pal}=$' "%.2f" % Ts_pal, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-5], r'$Ts_{per}=$' "%.2f" % Ts_per, fontsize=8)
@@ -906,7 +904,6 @@ for r in range(Nr):
     ax.yaxis.set_ticks_position('left')
     ax.set_yticks([-8,-6,-4,-2,-0])
     plt.text(pal_v[0],0, r'$nc=$' "%.2f" % nc, fontsize=8)
-    plt.text(pal_v[0],-0.5, r'$ns=$' "%.2f" % ns, fontsize=8)
     plt.text(pal_v[0],-1, r'$Tc=$' "%.2f" % Tc_pal, fontsize=8)
     plt.text(pal_v[0],-1.5, r'$Ts_{pal}=$' "%.2f" % Ts_pal, fontsize=8)
     plt.text(pal_v[0],-2, r'$Ts_{per}=$' "%.2f" % Ts_per, fontsize=8)
