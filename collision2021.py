@@ -1256,8 +1256,8 @@ ax.set_xlabel(r'$r/r_s$', fontsize=28)
 ax.set_ylabel(r'$n_e (m^{-3})$', fontsize=28)
 ax.plot(z,Density,linewidth=3.0, color='k',label=r'$Numerical \ Density$');
 ax.plot(z,max(Density)*(z[0]/z)**2,linewidth=3.0, color='k',linestyle='--',label=r'$Anaytical \ 1/r^{2} \ Density$');
-ax.plot(z,max(Density)*(z[0]/z)**2*(WS[0]/(WS)),linewidth=3.0, color='b',linestyle='dashdot',label=r'$Anaytical \ 1/r^{2} \ Density2$');
-ax.plot(z,max(Density)*(z[0]/z)**2*(WS[0]+Bulk[0])/(WS+Bulk),linewidth=3.0, color='r',linestyle='dotted',label=r'$Anaytical \ 1/r^{2} \ Density3$');
+ax.plot(z,max(Density)*(z[0]/z)**2*(WS[0]/(WS)),linewidth=3.0, color='b',linestyle='dashdot',label=r'$Anaytical \ 1/Ur^{2} \ Density$');
+ax.plot(z,max(Density)*(z[0]/z)**2*(WS[0]+Bulk[0])/(WS+Bulk),linewidth=3.0, color='r',linestyle='dotted',label=r'$Anaytical \ 1/(U+U_{bulk})r^{2} \ Density$');
 plt.legend(loc='upper right')
 plt.savefig(f'{path_current}figure/density.png')
 plt.clf()
