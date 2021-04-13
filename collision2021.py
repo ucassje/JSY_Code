@@ -807,7 +807,7 @@ for k in range(timestep):
     Normvalue[k]=norm**0.5
     print(norm**0.5)
 
-np.save('data.npy', f_1))
+np.save('data.npy', f_1)
 
 
 X2,Y2 = np.meshgrid(pal_v,per_v)
