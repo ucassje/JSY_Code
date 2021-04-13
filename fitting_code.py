@@ -17,7 +17,8 @@ from numpy import exp, loadtxt, pi, sqrt
 from lmfit import Parameters, fit_report, minimize
 #from lmfit import Model
 import lmfit
-
+Nv=30
+Nr=30
 
 f_1 = np.load('data.npy')
 for r in range(Nr):
