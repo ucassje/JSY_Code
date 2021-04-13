@@ -14,7 +14,7 @@ from scipy import special
 from math import e
 
 from numpy import exp, loadtxt, pi, sqrt
-
+from lmfit import Parameters, fit_report, minimize
 #from lmfit import Model
 import lmfit
 
