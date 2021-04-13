@@ -822,10 +822,10 @@ for r in range(Nr):
     print(r)
     if r==0:
             p = lmfit.Parameters()
-            p.add_many(('nc', 1,True,0.7,1), ('Tc_pal', 10*10**5,True,1*10**5,10*10**5), ('Ts_pal', 0*10**5,True,1*10**5,10*10**5), ('Ts_per', 0*10**5,True,1*10**5,10*10**5), ('Uc',0,True,-0.4,0),('Us',0,True,0,0.7),('kappac',8,True,4,20),('kappas',3,True,2,10))
+            p.add_many(('nc', 1,True,0.7,1), ('Tc_pal', 10*10**5,True,1*10**5,10*10**5), ('Ts_pal', 0*10**5,True,1*10**5,10*10**5), ('Ts_per', 0*10**5,True,1*10**5,20*10**5), ('Uc',0,True,-0.4,0),('Us',0,True,0,1.5),('kappac',8,True,4,20),('kappas',3,True,2,10))
     else:
             p = lmfit.Parameters()
-            p.add_many(('nc', nc,True,0.7,1), ('Tc_pal', Tc_pal,True,1*10**5,10*10**5), ('Ts_pal', Ts_pal,True,1*10**5,10*10**5), ('Ts_per', Ts_per,True,1*10**5,10*10**5), ('Uc',Uc,True,-0.4,0.4),('Us',Us,True,0.,0.7),('kappac',kappac,True,4,20),('kappas',kappas,True,2,10))
+            p.add_many(('nc', nc,True,0.7,1), ('Tc_pal', Tc_pal,True,1*10**5,10*10**5), ('Ts_pal', Ts_pal,True,1*10**5,10*10**5), ('Ts_per', Ts_per,True,1*10**5,20*10**5), ('Uc',Uc,True,-0.4,0.4),('Us',Us,True,0,1.5),('kappac',kappac,True,4,20),('kappas',kappas,True,2,10))
 
     f_11=np.zeros(shape = (Nv**2, 1))
     for j in range(Nv):
@@ -841,7 +841,7 @@ for r in range(Nr):
 
     mi = lmfit.minimize(residual, p, method='nelder', options={'maxiter' : 2000}, nan_policy='omit')
     lmfit.printfuncs.report_fit(mi.params, min_correl=0.5)
-
+    print(fit_report(mi))
     zx =  mi.params
     nc = zx['nc'].value
     Tc_pal = zx['Tc_pal'].value
