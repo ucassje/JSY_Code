@@ -158,6 +158,7 @@ for r in range(Nr):
     Us = zx['Us'].value
     kappac = zx['kappac'].value
     kappas = zx['kappas'].value
+    print(mi.redchi)
     
     if r==0:
         fitting_max=np.max(10**(residual(mi.params))*f_11)
@@ -189,7 +190,7 @@ for r in range(Nr):
     plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
     plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-1], r'$nc=$' "%.3f" % nc, fontsize=8)
-    plt.text(pal_v[0],pal_v[Nv-1], r'$ns=$' "%.3f" % ns, fontsize=8)
+    plt.text(pal_v[0],pal_v[Nv-2], r'$ns=$' "%.3f" % ns, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-3], r'$Tc=$' "%.3f" % Tc_pal, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-4], r'$Ts_{pal}=$' "%.3f" % Ts_pal, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-5], r'$Ts_{per}=$' "%.3f" % Ts_per, fontsize=8)
@@ -219,7 +220,7 @@ for r in range(Nr):
     ax.yaxis.set_ticks_position('left')
     ax.set_yticks([-8,-6,-4,-2,-0])
     plt.text(pal_v[0],0, r'$nc=$' "%.3f" % nc, fontsize=8)
-    plt.text(pal_v[0],0, r'$ns=$' "%.3f" % ns, fontsize=8)
+    plt.text(pal_v[0],-0.5, r'$ns=$' "%.3f" % ns, fontsize=8)
     plt.text(pal_v[0],-1, r'$Tc=$' "%.3f" % Tc_pal, fontsize=8)
     plt.text(pal_v[0],-1.5, r'$Ts_{pal}=$' "%.3f" % Ts_pal, fontsize=8)
     plt.text(pal_v[0],-2, r'$Ts_{per}=$' "%.3f" % Ts_per, fontsize=8)
