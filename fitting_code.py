@@ -154,9 +154,9 @@ for r in range(Nr):
     kappas = zx['kappas'].value
 
     fitting=np.zeros(shape = (Nv**2, 1))
-        for j in range(Nv):
-            for i in range(Nv):
-                fitting[j*Nv+i]=nc*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Tc_pal)*v_th_function(Tc_per)**2)**(-1)*(2/(np.pi*(2*kappac-3)))**1.5*(gamma(kappac+1)/gamma(kappac-0.5))*(1.+(2/(2*kappac-3))*(((per_v[j])/v_th_function(Tc_per))**2)+(2/(2*kappac-3))*(((pal_v[i]-Uc)/v_th_function(Tc_pal))**2))**(-kappac-1.)+(ns)*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Ts_pal)*v_th_function(Ts_per)**2)**(-1)*(2/(np.pi*(2*kappas-3)))**1.5*(gamma(kappas+1)/gamma(kappas-0.5))*(1.+(2/(2*kappas-3))*(((per_v[j])/v_th_function(Ts_per))**2)+(2/(2*kappas-3))*(((pal_v[i]-Us)/v_th_function(Ts_pal))**2))**(-kappas-1.)
+    for j in range(Nv):
+        for i in range(Nv):
+            fitting[j*Nv+i]=nc*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Tc_pal)*v_th_function(Tc_per)**2)**(-1)*(2/(np.pi*(2*kappac-3)))**1.5*(gamma(kappac+1)/gamma(kappac-0.5))*(1.+(2/(2*kappac-3))*(((per_v[j])/v_th_function(Tc_per))**2)+(2/(2*kappac-3))*(((pal_v[i]-Uc)/v_th_function(Tc_pal))**2))**(-kappac-1.)+(ns)*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Ts_pal)*v_th_function(Ts_per)**2)**(-1)*(2/(np.pi*(2*kappas-3)))**1.5*(gamma(kappas+1)/gamma(kappas-0.5))*(1.+(2/(2*kappas-3))*(((per_v[j])/v_th_function(Ts_per))**2)+(2/(2*kappas-3))*(((pal_v[i]-Us)/v_th_function(Ts_pal))**2))**(-kappas-1.)
     
     
     if r==0:
