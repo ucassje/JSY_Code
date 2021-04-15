@@ -126,11 +126,6 @@ for r in range(Nr):
                     f_11[j*Nv+i]=f_1[r*(Nv)*(Nv)+j*Nv+i]
 
     maxi=np.max(f_11)
-
-    #for j in range(Nv):
-    #        for i in range(Nv):
-    #                if f_11[j*Nv+i]/maxi<10**(-7):
-    #                        f_11[j*Nv+i]=10**(-20)
     
     def residual(p):
         v=p.valuesdict()
@@ -139,10 +134,7 @@ for r in range(Nr):
             for i in range(Nv):
                 fitting[j*Nv+i]=(v['nc'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Tc_pal'])*v_th_function(v['Tc_per'])**2)**(-1)*(2/(np.pi*(2*v['kappac']-3)))**1.5*(gamma(v['kappac']+1)/gamma(v['kappac']-0.5))*(1.+(2/(2*v['kappac']-3))*(((per_v[j])/v_th_function(v['Tc_per']))**2)+(2/(2*v['kappac']-3))*(((pal_v[i]-v['Uc'])/v_th_function(v['Tc_pal']))**2))**(-v['kappac']-1.)+(v['ns'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Ts_pal'])*v_th_function(v['Ts_per'])**2)**(-1)*(2/(np.pi*(2*v['kappas']-3)))**1.5*(gamma(v['kappas']+1)/gamma(v['kappas']-0.5))*(1.+(2/(2*v['kappas']-3))*(((per_v[j])/v_th_function(v['Ts_per']))**2)+(2/(2*v['kappas']-3))*(((pal_v[i]-v['Us'])/v_th_function(v['Ts_pal']))**2))**(-v['kappas']-1.)
         fit_maxi=np.max(fitting)
-        #for j in range(Nv):
-        #    for i in range(Nv):
-        #            if fitting[j*Nv+i]/fit_maxi<10**(-7):
-        #                    fitting[j*Nv+i]=10**(-20)
+        
         DataChosen = np.where((f_11/maxi)> 10**(-7));
         return np.log10(fitting[DataChosen])-np.log10(f_11[DataChosen]) #np.log10(fitting/fit_maxi)-np.log10(f_11/maxi) 
 
@@ -160,16 +152,21 @@ for r in range(Nr):
     Us = zx['Us'].value
     kappac = zx['kappac'].value
     kappas = zx['kappas'].value
+
+    fitting=np.zeros(shape = (Nv**2, 1))
+        for j in range(Nv):
+            for i in range(Nv):
+                fitting[j*Nv+i]=nc*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Tc_pal)*v_th_function(Tc_per)**2)**(-1)*(2/(np.pi*(2*kappac-3)))**1.5*(gamma(kappac+1)/gamma(kappac-0.5))*(1.+(2/(2*kappac-3))*(((per_v[j])/v_th_function(Tc_per))**2)+(2/(2*kappac-3))*(((pal_v[i]-Uc)/v_th_function(Tc_pal))**2))**(-kappac-1.)+(ns)*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Ts_pal)*v_th_function(Ts_per)**2)**(-1)*(2/(np.pi*(2*kappas-3)))**1.5*(gamma(kappas+1)/gamma(kappas-0.5))*(1.+(2/(2*kappas-3))*(((per_v[j])/v_th_function(Ts_per))**2)+(2/(2*kappas-3))*(((pal_v[i]-Us)/v_th_function(Ts_pal))**2))**(-kappas-1.)
     
     
     if r==0:
-        fitting_max=np.max(10**(residual(mi.params))*f_11)
+        fitting_max=np.max(fitting)
         original_max=np.max(f_11)
 
     solu1=np.zeros(shape = (Nv, Nv))
     for j in range(Nv):
         for i in range(Nv):
-            solu1[j,i]=np.log10((10**(residual(mi.params)[j*Nv+i])*f_11[j*Nv+i])/fitting_max)
+            solu1[j,i]=np.log10(fitting[j*Nv+i]/fitting_max)
     fig = plt.figure()
     fig.set_dpi(500)
     plt.contourf(X2, Y2, solu1, cont_lev,cmap='Blues');
@@ -210,7 +207,7 @@ for r in range(Nr):
     solu2=np.zeros(shape = (Nv))
 
     for i in range(Nv):
-        solu2[i]=np.log10((10**(residual(mi.params)[15*Nv+i])*f_11[15*Nv+i])/fitting_max)
+        solu2[i]=np.log10(fitting[15*Nv+i]/fitting_max)
     fig = plt.figure()
     fig.set_dpi(500)
     plt.plot(pal_v,solu2,color='k',label=r'$r/r_s=$' "%.2f" % z[r]);
