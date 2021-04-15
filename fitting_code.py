@@ -265,7 +265,7 @@ ax.set_ylim([0,1])
 ax.set_xlabel(r'$r/r_s$', fontsize=28)
 ax.set_ylabel(r'$Relative \ Density$', fontsize=28)
 ax.plot(z,nc,linewidth=3.0, color='k',label=r'$nc$');
-ax.plot(z,ns,linewidth=3.0, color='r',label=r'$ns$');
+ax.plot(z,1-nc,linewidth=3.0, color='r',label=r'$ns$');
 plt.legend(loc='upper right')
 plt.savefig(f'{path_current}fitting/density.png')
 plt.clf()
