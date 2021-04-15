@@ -129,7 +129,7 @@ for r in range(Nr):
             p.add_many(('nc', 1,True,0.7,1), ('Tc_pal', 10*10**5,True,1*10**5,10*10**5), ('Tc_per', 10*10**5,True,1*10**5,10*10**5), ('Ts_pal', 0*10**5,True,1*10**5,20*10**5), ('Ts_per', 0*10**5,True,1*10**5,20*10**5), ('Uc',0,True,-0.4,0),('Us',0,True,0,1.5),('kappac',8,True,4,50),('kappas',3,True,2,50))
     else:                          #,('Us',0,True,0,1.5) , ('Uc',0,True,-0.4,0) 
             p = lmfit.Parameters()
-            p.add_many(('nc', nc,True,0.7,1), ('Tc_pal', Tc_pal,True,1*10**5,10*10**5), ('Tc_per', Tc_per,True,1*10**5,10*10**5), ('Ts_pal', Ts_pal,True,1*10**5,20*10**5), ('Ts_per', Ts_per,True,1*10**5,20*10**5), ('Uc',Uc,True,-0.4,0),('Us',Us,True,0,1.5),('kappac',kappac,True,4,50),('kappas',kappas,True,2,50))
+            p.add_many(('nc', nc[r-1],True,0.7,1), ('Tc_pal', Tc_pal[r-1],True,1*10**5,10*10**5), ('Tc_per', Tc_per[r-1],True,1*10**5,10*10**5), ('Ts_pal', Ts_pal[r-1],True,1*10**5,20*10**5), ('Ts_per', Ts_per[r-1],True,1*10**5,20*10**5), ('Uc',Uc[r-1],True,-0.4,0),('Us',Us[r-1],True,0,1.5),('kappac',kappac[r-1],True,4,50),('kappas',kappas[r-1],True,2,50))
                                    #,('Us',Us,True,0,1.5) , ('Uc',Uc,True,-0.4,0.4) 
     f_11=np.zeros(shape = (Nv**2, 1))
     for j in range(Nv):
