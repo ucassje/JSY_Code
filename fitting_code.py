@@ -110,6 +110,17 @@ def kappa_v_th_function(T):
 X2,Y2 = np.meshgrid(pal_v,per_v)
 cont_lev = np.linspace(-10,0,25)
 
+nc=np.zeros(shape = (Nr))
+Tc_pal=np.zeros(shape = (Nr))
+Tc_per=np.zeros(shape = (Nr))
+Ts_pal=np.zeros(shape = (Nr))
+Ts_per=np.zeros(shape = (Nr))
+Uc=np.zeros(shape = (Nr))
+Us=np.zeros(shape = (Nr))
+kappac=np.zeros(shape = (Nr))
+kappas=np.zeros(shape = (Nr))
+
+
 f_1 = np.load('data.npy')
 for r in range(Nr):
     print(r)
@@ -142,21 +153,21 @@ for r in range(Nr):
     #lmfit.printfuncs.report_fit(mi.params, min_correl=0.5)
     print(fit_report(mi))
     zx =  mi.params
-    nc = zx['nc'].value
+    nc[r] = zx['nc'].value
     #ns = zx['ns'].value
-    Tc_pal = zx['Tc_pal'].value
-    Tc_per = zx['Tc_per'].value
-    Ts_pal = zx['Ts_pal'].value
-    Ts_per = zx['Ts_per'].value
-    Uc = zx['Uc'].value
-    Us = zx['Us'].value
-    kappac = zx['kappac'].value
-    kappas = zx['kappas'].value
+    Tc_pal[r] = zx['Tc_pal'].value
+    Tc_per[r] = zx['Tc_per'].value
+    Ts_pal[r] = zx['Ts_pal'].value
+    Ts_per[r] = zx['Ts_per'].value
+    Uc[r] = zx['Uc'].value
+    Us[r] = zx['Us'].value
+    kappac[r] = zx['kappac'].value
+    kappas[r] = zx['kappas'].value
 
     fitting=np.zeros(shape = (Nv**2, 1))
     for j in range(Nv):
         for i in range(Nv):
-            fitting[j*Nv+i]=nc*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Tc_pal)*v_th_function(Tc_per)**2)**(-1)*(2/(np.pi*(2*kappac-3)))**1.5*(gamma(kappac+1)/gamma(kappac-0.5))*(1.+(2/(2*kappac-3))*(((per_v[j])/v_th_function(Tc_per))**2)+(2/(2*kappac-3))*(((pal_v[i]-Uc)/v_th_function(Tc_pal))**2))**(-kappac-1.)+(1-nc)*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Ts_pal)*v_th_function(Ts_per)**2)**(-1)*(2/(np.pi*(2*kappas-3)))**1.5*(gamma(kappas+1)/gamma(kappas-0.5))*(1.+(2/(2*kappas-3))*(((per_v[j])/v_th_function(Ts_per))**2)+(2/(2*kappas-3))*(((pal_v[i]-Us)/v_th_function(Ts_pal))**2))**(-kappas-1.)
+            fitting[j*Nv+i]=nc[r]*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Tc_pal[r])*v_th_function(Tc_per[r])**2)**(-1)*(2/(np.pi*(2*kappac[r]-3)))**1.5*(gamma(kappac[r]+1)/gamma(kappac[r]-0.5))*(1.+(2/(2*kappac[r]-3))*(((per_v[j])/v_th_function(Tc_per[r]))**2)+(2/(2*kappac[r]-3))*(((pal_v[i]-Uc[r])/v_th_function(Tc_pal[r]))**2))**(-kappac[r]-1.)+(1-nc[r])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Ts_pal[r])*v_th_function(Ts_per[r])**2)**(-1)*(2/(np.pi*(2*kappas[r]-3)))**1.5*(gamma(kappas[r]+1)/gamma(kappas[r]-0.5))*(1.+(2/(2*kappas[r]-3))*(((per_v[j])/v_th_function(Ts_per[r]))**2)+(2/(2*kappas[r]-3))*(((pal_v[i]-Us[r])/v_th_function(Ts_pal[r]))**2))**(-kappas[r]-1.)
     
     
     if r==0:
@@ -240,3 +251,75 @@ for r in range(Nr):
     plt.savefig(f'{path_current}fitting/1D/{r}.png')
     plt.clf()
     plt.close()
+
+
+
+plt.figure(figsize=(20,15))
+plt.grid()
+ax = plt.gca()
+plt.rc('font', size=35)
+plt.tick_params(labelsize=40)
+plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+ax.set_xlim([z[0],z[Nr-1]])
+ax.set_ylim([0,1])
+ax.set_xlabel(r'$r/r_s$', fontsize=28)
+ax.set_ylabel(r'$Relative \ Density$', fontsize=28)
+ax.plot(z,nc,linewidth=3.0, color='k',label=r'$nc$');
+ax.plot(z,ns,linewidth=3.0, color='r',label=r'$ns$');
+plt.legend(loc='upper right')
+plt.savefig(f'{path_current}fitting/density.png')
+plt.clf()
+plt.close()
+
+plt.figure(figsize=(20,15))
+plt.grid()
+ax = plt.gca()
+plt.rc('font', size=35)
+plt.tick_params(labelsize=40)
+plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+ax.set_xlim([z[0],z[Nr-1]])
+ax.set_ylim([10**(5),20*10**(5)])
+ax.set_xlabel(r'$r/r_s$', fontsize=28)
+ax.set_ylabel(r'$Temperatures$', fontsize=28)
+ax.plot(z,Tc_pal,linewidth=3.0, color='k',label=r'$Tc_{pal}$');
+ax.plot(z,Tc_per,linewidth=3.0, color='r',label=r'$Tc_{per}$');
+ax.plot(z,Ts_pal,linewidth=3.0, color='k',linestyle='dotted',label=r'$Ts_{pal}$');
+ax.plot(z,Ts_per,linewidth=3.0, color='r',linestyle='dotted',label=r'$Ts_{per}$');
+plt.legend(loc='upper right')
+plt.savefig(f'{path_current}fitting/temperature.png')
+plt.clf()
+plt.close()
+
+plt.figure(figsize=(20,15))
+plt.grid()
+ax = plt.gca()
+plt.rc('font', size=35)
+plt.tick_params(labelsize=40)
+plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+ax.set_xlim([z[0],z[Nr-1]])
+ax.set_ylim([-0.05,0.5])
+ax.set_xlabel(r'$r/r_s$', fontsize=28)
+ax.set_ylabel(r'$Bulk \ Velocity$', fontsize=28)
+ax.plot(z,Uc,linewidth=3.0, color='k',label=r'$Uc$');
+ax.plot(z,Us,linewidth=3.0, color='r',label=r'$Us$');
+plt.legend(loc='upper right')
+plt.savefig(f'{path_current}fitting/BulkVelocity.png')
+plt.clf()
+plt.close()
+
+plt.figure(figsize=(20,15))
+plt.grid()
+ax = plt.gca()
+plt.rc('font', size=35)
+plt.tick_params(labelsize=40)
+plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+ax.set_xlim([z[0],z[Nr-1]])
+ax.set_ylim([-0.05,0.5])
+ax.set_xlabel(r'$r/r_s$', fontsize=28)
+ax.set_ylabel(r'$Kappa \ Value$', fontsize=28)
+ax.plot(z,kappac,linewidth=3.0, color='k',label=r'$kappa_c$');
+ax.plot(z,kappas,linewidth=3.0, color='r',label=r'$kappa_s$');
+plt.legend(loc='upper right')
+plt.savefig(f'{path_current}fitting/Kappa.png')
+plt.clf()
+plt.close()
