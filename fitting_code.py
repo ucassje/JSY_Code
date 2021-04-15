@@ -314,7 +314,7 @@ plt.rc('font', size=35)
 plt.tick_params(labelsize=40)
 plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 ax.set_xlim([z[0],z[Nr-1]])
-ax.set_ylim([-0.05,0.5])
+ax.set_ylim([2,50])
 ax.set_xlabel(r'$r/r_s$', fontsize=28)
 ax.set_ylabel(r'$Kappa \ Value$', fontsize=28)
 ax.plot(z,kappac,linewidth=3.0, color='k',label=r'$kappa_c$');
