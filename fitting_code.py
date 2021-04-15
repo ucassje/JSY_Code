@@ -135,7 +135,7 @@ for r in range(Nr):
                 fitting[j*Nv+i]=(v['nc'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Tc_pal'])*v_th_function(v['Tc_per'])**2)**(-1)*(2/(np.pi*(2*v['kappac']-3)))**1.5*(gamma(v['kappac']+1)/gamma(v['kappac']-0.5))*(1.+(2/(2*v['kappac']-3))*(((per_v[j])/v_th_function(v['Tc_per']))**2)+(2/(2*v['kappac']-3))*(((pal_v[i]-v['Uc'])/v_th_function(v['Tc_pal']))**2))**(-v['kappac']-1.)+(v['ns'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Ts_pal'])*v_th_function(v['Ts_per'])**2)**(-1)*(2/(np.pi*(2*v['kappas']-3)))**1.5*(gamma(v['kappas']+1)/gamma(v['kappas']-0.5))*(1.+(2/(2*v['kappas']-3))*(((per_v[j])/v_th_function(v['Ts_per']))**2)+(2/(2*v['kappas']-3))*(((pal_v[i]-v['Us'])/v_th_function(v['Ts_pal']))**2))**(-v['kappas']-1.)
         fit_maxi=np.max(fitting)
         
-        DataChosen = np.where((f_11/maxi)> 10**(-7));
+        DataChosen = np.where((f_11/maxi)> 10**(-6));
         return np.log10(fitting[DataChosen])-np.log10(f_11[DataChosen]) #np.log10(fitting/fit_maxi)-np.log10(f_11/maxi) 
 
     mi = lmfit.minimize(residual, p, method='nelder', options={'maxiter' : 2000}, nan_policy='omit')
