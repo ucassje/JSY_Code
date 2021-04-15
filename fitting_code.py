@@ -115,11 +115,11 @@ for r in range(Nr):
     print(r)
     if r==0:
             p = lmfit.Parameters()
-            p.add_many(('nc', 1,True,0.7,1), ('Tc_pal', 10*10**5,True,1*10**5,10*10**5), ('Ts_pal', 0*10**5,True,1*10**5,20*10**5), ('Ts_per', 0*10**5,True,1*10**5,20*10**5), ('Uc',0,True,-0.4,0),('Us',0,True,0,1.5),('kappac',8,True,4,20),('kappas',3,True,2,10))
-    else:                          #,('Us',0,True,0,1.5) , ('Uc',0,True,-0.4,0) ,('ns', 0,True,0,0.3)
+            p.add_many(('nc', 1,True,0.7,1),('ns', 0,True,0,0.3), ('Tc_pal', 10*10**5,True,1*10**5,10*10**5), ('Tc_per', 10*10**5,True,1*10**5,10*10**5), ('Ts_pal', 0*10**5,True,1*10**5,20*10**5), ('Ts_per', 0*10**5,True,1*10**5,20*10**5), ('Uc',0,True,-0.4,0),('Us',0,True,0,1.5),('kappac',8,True,4,20),('kappas',3,True,2,10))
+    else:                          #,('Us',0,True,0,1.5) , ('Uc',0,True,-0.4,0) 
             p = lmfit.Parameters()
-            p.add_many(('nc', nc,True,0.7,1), ('Tc_pal', Tc_pal,True,1*10**5,10*10**5), ('Ts_pal', Ts_pal,True,1*10**5,20*10**5), ('Ts_per', Ts_per,True,1*10**5,20*10**5), ('Uc',Uc,True,-0.4,0),('Us',Us,True,0,1.5),('kappac',kappac,True,4,20),('kappas',kappas,True,2,10))
-                                   #,('Us',Us,True,0,1.5) , ('Uc',Uc,True,-0.4,0.4) ,('ns', ns,True,0,0.3)
+            p.add_many(('nc', nc,True,0.7,1),('ns', ns,True,0,0.3), ('Tc_pal', Tc_pal,True,1*10**5,10*10**5), ('Tc_per', Tc_per,True,1*10**5,10*10**5), ('Ts_pal', Ts_pal,True,1*10**5,20*10**5), ('Ts_per', Ts_per,True,1*10**5,20*10**5), ('Uc',Uc,True,-0.4,0),('Us',Us,True,0,1.5),('kappac',kappac,True,4,20),('kappas',kappas,True,2,10))
+                                   #,('Us',Us,True,0,1.5) , ('Uc',Uc,True,-0.4,0.4) 
     f_11=np.zeros(shape = (Nv**2, 1))
     for j in range(Nv):
             for i in range(Nv):
@@ -150,9 +150,9 @@ for r in range(Nr):
     print(fit_report(mi))
     zx =  mi.params
     nc = zx['nc'].value
-    #ns = zx['ns'].value
+    ns = zx['ns'].value
     Tc_pal = zx['Tc_pal'].value
-    #Tc_per = zx['Tc_per'].value
+    Tc_per = zx['Tc_per'].value
     Ts_pal = zx['Ts_pal'].value
     Ts_per = zx['Ts_per'].value
     Uc = zx['Uc'].value
@@ -191,9 +191,9 @@ for r in range(Nr):
     plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
     plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-1], r'$nc=$' "%.3f" % nc, fontsize=8)
-    #plt.text(pal_v[0],pal_v[Nv-2], r'$ns=$' "%.3f" % ns, fontsize=8)
+    plt.text(pal_v[0],pal_v[Nv-2], r'$ns=$' "%.3f" % ns, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-3], r'$Tc_{pal}=$' "%.3f" % Tc_pal, fontsize=8)
-    #plt.text(pal_v[0],pal_v[Nv-4], r'$Tc_{per}=$' "%.3f" % Tc_per, fontsize=8)
+    plt.text(pal_v[0],pal_v[Nv-4], r'$Tc_{per}=$' "%.3f" % Tc_per, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-5], r'$Ts_{pal}=$' "%.3f" % Ts_pal, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-6], r'$Ts_{per}=$' "%.3f" % Ts_per, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-7], r'$Uc=$' "%.3f" % Uc, fontsize=8)
@@ -223,9 +223,9 @@ for r in range(Nr):
     ax.yaxis.set_ticks_position('left')
     ax.set_yticks([-8,-6,-4,-2,-0])
     plt.text(pal_v[0],0, r'$nc=$' "%.3f" % nc, fontsize=8)
-    #plt.text(pal_v[0],-0.5, r'$ns=$' "%.3f" % ns, fontsize=8)
+    plt.text(pal_v[0],-0.5, r'$ns=$' "%.3f" % ns, fontsize=8)
     plt.text(pal_v[0],-1, r'$Tc_{pal}=$' "%.3f" % Tc_pal, fontsize=8)
-    #plt.text(pal_v[0],-1.5, r'$Tc_{per}=$' "%.3f" % Tc_per, fontsize=8)
+    plt.text(pal_v[0],-1.5, r'$Tc_{per}=$' "%.3f" % Tc_per, fontsize=8)
     plt.text(pal_v[0],-2, r'$Ts_{pal}=$' "%.3f" % Ts_pal, fontsize=8)
     plt.text(pal_v[0],-2.5, r'$Ts_{per}=$' "%.3f" % Ts_per, fontsize=8)
     plt.text(pal_v[0],-3, r'$Uc=$' "%.3f" % Uc, fontsize=8)
