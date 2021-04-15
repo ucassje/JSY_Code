@@ -115,10 +115,10 @@ for r in range(Nr):
     print(r)
     if r==0:
             p = lmfit.Parameters()
-            p.add_many(('nc', 1,True,0.7,1),('ns', 0,True,0,0.3), ('Tc_pal', 10*10**5,True,1*10**5,10*10**5), ('Tc_per', 10*10**5,True,1*10**5,10*10**5), ('Ts_pal', 0*10**5,True,1*10**5,20*10**5), ('Ts_per', 0*10**5,True,1*10**5,20*10**5), ('Uc',0,True,-0.4,0),('Us',0,True,0,1.5),('kappac',8,True,4,50),('kappas',3,True,2,50))
+            p.add_many(('nc', 1,True,0.7,1), ('Tc_pal', 10*10**5,True,1*10**5,10*10**5), ('Tc_per', 10*10**5,True,1*10**5,10*10**5), ('Ts_pal', 0*10**5,True,1*10**5,20*10**5), ('Ts_per', 0*10**5,True,1*10**5,20*10**5), ('Uc',0,True,-0.4,0),('Us',0,True,0,1.5),('kappac',8,True,4,50),('kappas',3,True,2,50))
     else:                          #,('Us',0,True,0,1.5) , ('Uc',0,True,-0.4,0) 
             p = lmfit.Parameters()
-            p.add_many(('nc', nc,True,0.7,1),('ns', ns,True,0,0.3), ('Tc_pal', Tc_pal,True,1*10**5,10*10**5), ('Tc_per', Tc_per,True,1*10**5,10*10**5), ('Ts_pal', Ts_pal,True,1*10**5,20*10**5), ('Ts_per', Ts_per,True,1*10**5,20*10**5), ('Uc',Uc,True,-0.4,0),('Us',Us,True,0,1.5),('kappac',kappac,True,4,50),('kappas',kappas,True,2,50))
+            p.add_many(('nc', nc,True,0.7,1), ('Tc_pal', Tc_pal,True,1*10**5,10*10**5), ('Tc_per', Tc_per,True,1*10**5,10*10**5), ('Ts_pal', Ts_pal,True,1*10**5,20*10**5), ('Ts_per', Ts_per,True,1*10**5,20*10**5), ('Uc',Uc,True,-0.4,0),('Us',Us,True,0,1.5),('kappac',kappac,True,4,50),('kappas',kappas,True,2,50))
                                    #,('Us',Us,True,0,1.5) , ('Uc',Uc,True,-0.4,0.4) 
     f_11=np.zeros(shape = (Nv**2, 1))
     for j in range(Nv):
@@ -132,7 +132,7 @@ for r in range(Nr):
         fitting=np.zeros(shape = (Nv**2, 1))
         for j in range(Nv):
             for i in range(Nv):
-                fitting[j*Nv+i]=(v['nc'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Tc_pal'])*v_th_function(v['Tc_per'])**2)**(-1)*(2/(np.pi*(2*v['kappac']-3)))**1.5*(gamma(v['kappac']+1)/gamma(v['kappac']-0.5))*(1.+(2/(2*v['kappac']-3))*(((per_v[j])/v_th_function(v['Tc_per']))**2)+(2/(2*v['kappac']-3))*(((pal_v[i]-v['Uc'])/v_th_function(v['Tc_pal']))**2))**(-v['kappac']-1.)+(v['ns'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Ts_pal'])*v_th_function(v['Ts_per'])**2)**(-1)*(2/(np.pi*(2*v['kappas']-3)))**1.5*(gamma(v['kappas']+1)/gamma(v['kappas']-0.5))*(1.+(2/(2*v['kappas']-3))*(((per_v[j])/v_th_function(v['Ts_per']))**2)+(2/(2*v['kappas']-3))*(((pal_v[i]-v['Us'])/v_th_function(v['Ts_pal']))**2))**(-v['kappas']-1.)
+                fitting[j*Nv+i]=(v['nc'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Tc_pal'])*v_th_function(v['Tc_per'])**2)**(-1)*(2/(np.pi*(2*v['kappac']-3)))**1.5*(gamma(v['kappac']+1)/gamma(v['kappac']-0.5))*(1.+(2/(2*v['kappac']-3))*(((per_v[j])/v_th_function(v['Tc_per']))**2)+(2/(2*v['kappac']-3))*(((pal_v[i]-v['Uc'])/v_th_function(v['Tc_pal']))**2))**(-v['kappac']-1.)+(1-v['nc'])*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(v['Ts_pal'])*v_th_function(v['Ts_per'])**2)**(-1)*(2/(np.pi*(2*v['kappas']-3)))**1.5*(gamma(v['kappas']+1)/gamma(v['kappas']-0.5))*(1.+(2/(2*v['kappas']-3))*(((per_v[j])/v_th_function(v['Ts_per']))**2)+(2/(2*v['kappas']-3))*(((pal_v[i]-v['Us'])/v_th_function(v['Ts_pal']))**2))**(-v['kappas']-1.)
         fit_maxi=np.max(fitting)
         
         DataChosen = np.where((f_11/maxi)> 10**(-6));
@@ -143,7 +143,7 @@ for r in range(Nr):
     print(fit_report(mi))
     zx =  mi.params
     nc = zx['nc'].value
-    ns = zx['ns'].value
+    #ns = zx['ns'].value
     Tc_pal = zx['Tc_pal'].value
     Tc_per = zx['Tc_per'].value
     Ts_pal = zx['Ts_pal'].value
@@ -156,7 +156,7 @@ for r in range(Nr):
     fitting=np.zeros(shape = (Nv**2, 1))
     for j in range(Nv):
         for i in range(Nv):
-            fitting[j*Nv+i]=nc*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Tc_pal)*v_th_function(Tc_per)**2)**(-1)*(2/(np.pi*(2*kappac-3)))**1.5*(gamma(kappac+1)/gamma(kappac-0.5))*(1.+(2/(2*kappac-3))*(((per_v[j])/v_th_function(Tc_per))**2)+(2/(2*kappac-3))*(((pal_v[i]-Uc)/v_th_function(Tc_pal))**2))**(-kappac-1.)+(ns)*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Ts_pal)*v_th_function(Ts_per)**2)**(-1)*(2/(np.pi*(2*kappas-3)))**1.5*(gamma(kappas+1)/gamma(kappas-0.5))*(1.+(2/(2*kappas-3))*(((per_v[j])/v_th_function(Ts_per))**2)+(2/(2*kappas-3))*(((pal_v[i]-Us)/v_th_function(Ts_pal))**2))**(-kappas-1.)
+            fitting[j*Nv+i]=nc*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Tc_pal)*v_th_function(Tc_per)**2)**(-1)*(2/(np.pi*(2*kappac-3)))**1.5*(gamma(kappac+1)/gamma(kappac-0.5))*(1.+(2/(2*kappac-3))*(((per_v[j])/v_th_function(Tc_per))**2)+(2/(2*kappac-3))*(((pal_v[i]-Uc)/v_th_function(Tc_pal))**2))**(-kappac-1.)+(1-nc)*(U_solar(z[0])/U_solar(z[r]))*(r_s**3)*(n(z[r])*10**6)*(v_th_function(Ts_pal)*v_th_function(Ts_per)**2)**(-1)*(2/(np.pi*(2*kappas-3)))**1.5*(gamma(kappas+1)/gamma(kappas-0.5))*(1.+(2/(2*kappas-3))*(((per_v[j])/v_th_function(Ts_per))**2)+(2/(2*kappas-3))*(((pal_v[i]-Us)/v_th_function(Ts_pal))**2))**(-kappas-1.)
     
     
     if r==0:
@@ -189,7 +189,7 @@ for r in range(Nr):
     plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
     plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-1], r'$nc=$' "%.3f" % nc, fontsize=8)
-    plt.text(pal_v[0],pal_v[Nv-2], r'$ns=$' "%.3f" % ns, fontsize=8)
+    #plt.text(pal_v[0],pal_v[Nv-2], r'$ns=$' "%.3f" % ns, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-3], r'$Tc_{pal}=$' "%.3f" % Tc_pal, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-4], r'$Tc_{per}=$' "%.3f" % Tc_per, fontsize=8)
     plt.text(pal_v[0],pal_v[Nv-5], r'$Ts_{pal}=$' "%.3f" % Ts_pal, fontsize=8)
@@ -221,7 +221,7 @@ for r in range(Nr):
     ax.yaxis.set_ticks_position('left')
     ax.set_yticks([-8,-6,-4,-2,-0])
     plt.text(pal_v[0],0, r'$nc=$' "%.3f" % nc, fontsize=8)
-    plt.text(pal_v[0],-0.5, r'$ns=$' "%.3f" % ns, fontsize=8)
+    #plt.text(pal_v[0],-0.5, r'$ns=$' "%.3f" % ns, fontsize=8)
     plt.text(pal_v[0],-1, r'$Tc_{pal}=$' "%.3f" % Tc_pal, fontsize=8)
     plt.text(pal_v[0],-1.5, r'$Tc_{per}=$' "%.3f" % Tc_per, fontsize=8)
     plt.text(pal_v[0],-2, r'$Ts_{pal}=$' "%.3f" % Ts_pal, fontsize=8)
