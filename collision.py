@@ -138,7 +138,11 @@ for r in range(Nr):
    Bulk[r]=tempBulk/((r_s**3)*Density[r])
 
 def U_solar(r):
-        return U_f*(np.exp(r/20.)-np.exp(-r/20.))/(np.exp(r/20.)+np.exp(-r/20.))+Bulk[r] 
+        l=0
+        for x in range(Nr):
+            if abs(z[x]-r)<0.5*delz:
+                l=x
+        return U_f*(np.exp(r/20.)-np.exp(-r/20.))/(np.exp(r/20.)+np.exp(-r/20.))+Bulk[l] 
 
 ratio_r=np.zeros(shape = (Nr*Nv**2, 1))
 for r in range(Nr-1):
