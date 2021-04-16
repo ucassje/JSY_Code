@@ -139,9 +139,9 @@ for r in range(Nr):
 
 def U_solar(r):
         l=0
-        for x in range(Nr):
-            if abs(z[x]-r)<0.5*delz:
-                l=x
+        for u in range(Nr):
+            if abs(z[u]-r)<0.5*delz:
+                l=u
         return U_f*(np.exp(r/20.)-np.exp(-r/20.))/(np.exp(r/20.)+np.exp(-r/20.))+Bulk[l] 
 
 ratio_r=np.zeros(shape = (Nr*Nv**2, 1))
@@ -1029,33 +1029,33 @@ plt.savefig(f'{path_current}figure/wind speed.png')
 plt.clf()
 plt.close()
 
-Q=np.zeros(shape = (Nr))
-for r in range(Nr):
-   tempQ=0
-   for j in range(Nv):
-      for i in range(Nv):
-              if (pal_v[i]**2+abs(per_v[j])**2)**0.5<=10:
-                      tempQ=tempQ+2*np.pi*(pal_v[i]**2+abs(per_v[j])**2)*pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-              else:
-                      tempQ=tempQ
-   Q[r]=(z[r]**2)*tempQ/((r_s**3)*2)
+#Q=np.zeros(shape = (Nr))
+#for r in range(Nr):
+#   tempQ=0
+#   for j in range(Nv):
+#      for i in range(Nv):
+#              if (pal_v[i]**2+abs(per_v[j])**2)**0.5<=10:
+#                      tempQ=tempQ+2*np.pi*(pal_v[i]**2+abs(per_v[j])**2)*pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+#              else:
+#                      tempQ=tempQ
+#   Q[r]=(z[r]**2)*tempQ/((r_s**3)*2)
 
-plt.figure(figsize=(20,15))
-plt.grid()
-ax = plt.gca()
-plt.rc('font', size=35)
-plt.tick_params(labelsize=40)
-plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-ax.set_xlim([z[0],z[Nr-1]])
-ax.set_ylim([min(Q),max(Q)])
-ax.set_xlabel(r'$r/r_s$', fontsize=28)
-ax.set_ylabel(r'$Q_\parallel$', fontsize=28)
-ax.plot(z,Q,linewidth=3.0, color='k',label=r'$Numerical \ Q_\parallel$');
-ax.plot(z,max(Q)-max(Q)*np.exp(0.5*np.log(B(z)/B(z[0]))),linewidth=3.0, color='k',linestyle='--',label=r'$Anaytical \ Q_\parallel$');
-plt.legend(loc='upper right')
-plt.savefig(f'{path_current}figure/Q.png')
-plt.clf()
-plt.close()
+#plt.figure(figsize=(20,15))
+#plt.grid()
+#ax = plt.gca()
+#plt.rc('font', size=35)
+#plt.tick_params(labelsize=40)
+#plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+#ax.set_xlim([z[0],z[Nr-1]])
+#ax.set_ylim([min(Q),max(Q)])
+#ax.set_xlabel(r'$r/r_s$', fontsize=28)
+#ax.set_ylabel(r'$Q_\parallel$', fontsize=28)
+#ax.plot(z,Q,linewidth=3.0, color='k',label=r'$Numerical \ Q_\parallel$');
+#ax.plot(z,max(Q)-max(Q)*np.exp(0.5*np.log(B(z)/B(z[0]))),linewidth=3.0, color='k',linestyle='--',label=r'$Anaytical \ Q_\parallel$');
+#plt.legend(loc='upper right')
+#plt.savefig(f'{path_current}figure/Q.png')
+#plt.clf()
+#plt.close()
 
 
 #for r in range(Nr):
