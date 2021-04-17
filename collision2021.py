@@ -900,7 +900,7 @@ for r in range(Nr):
    tempBulk=0
    for j in range(Nv):
       for i in range(Nv):
-              if per_v[j]<0:
+              if per_v[j]<0 and np.log10(f_1[r*(Nv)*(Nv)+j*Nv+i]/np.max(f_1))>=-6:
                       tempBulk=tempBulk+2*np.pi*pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
               else:
                       tempBulk=tempBulk
