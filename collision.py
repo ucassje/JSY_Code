@@ -140,12 +140,51 @@ for r in range(Nr):
                       tempBulk=tempBulk
    Bulk[r]=tempBulk/((r_s**3)*Density[r])
 
+
+Temperature_pal=np.zeros(shape = (Nr))
+for r in range(Nr):
+   temptemp=0
+   for j in range(Nv):
+      for i in range(Nv):
+              if per_v[j]<0:
+                      temptemp=temptemp
+              else:
+                      temptemp=temptemp+2*np.pi*(pal_v[i]**2)*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+   Temperature_pal[r]=v_Ae_0**2*Me*temptemp/((r_s**3)*Density[r]*Bol_k)
+
+Temperature_per=np.zeros(shape = (Nr))
+for r in range(Nr):
+   temptemp=0
+   for j in range(Nv):
+      for i in range(Nv):
+              if per_v[j]<0:
+                      temptemp=temptemp
+              else:
+                      temptemp=temptemp+2*np.pi*(per_v[j]**2)*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+   Temperature_per[r]=v_Ae_0**2*Me*temptemp/(2*(r_s**3)*Density[r]*Bol_k)
+
 def U_solar(r):
         l=0
         for u in range(Nr):
             if abs(z[u]-r)<0.5*delz:
                 l=u
         return U_f*(np.exp(r/20.)-np.exp(-r/20.))/(np.exp(r/20.)+np.exp(-r/20.))+Bulk[l] 
+
+def temperature_pal(r):
+        l=0
+        for u in range(Nr):
+            if abs(z[u]-r)<0.5*delz:
+                l=u
+        return Temperature_pal[l]
+
+def temperature_per(r):
+        l=0
+        for u in range(Nr):
+            if abs(z[u]-r)<0.5*delz:
+                l=u
+        return Temperature_per[l]
+
+
 
 ratio_r=np.zeros(shape = (Nr*Nv**2, 1))
 for r in range(Nr-1):
@@ -358,7 +397,7 @@ def dlnB(x):
         return (np.log(B(x+delz))-np.log(B(x-delz)))/(2*delz)
 
 def electric(x):
-        return U_solar(x)*dU_solar(x)/(cos(x)**2)+(U_solar(x)**2/cos(x))*dcos_1(x)+(1/v_Ae_0**2)*(Bol_k)/(Me*n(x))*(n(x)*temperature(x)*lntemperature(x)+temperature(x)*n(x)*lnn(x))+(1/v_Ae_0**2)*(Bol_k)/(2*Me)*dlnB(x)*temperature(x)+(1/v_Ae_0**2)*(2*Bol_k)/(Me*x)*temperature(x)
+        return U_solar(x)*dU_solar(x)/(cos(x)**2)+(U_solar(x)**2/cos(x))*dcos_1(x)+(1/v_Ae_0**2)*(Bol_k)/(Me*n(x))*(n(x)*temperature_pal(x)*lntemperature(x)+temperature_pal(x)*n(x)*lnn(x))+(1/v_Ae_0**2)*(Bol_k)/(2*Me)*dlnB(x)*temperature_per(x)+(1/v_Ae_0**2)*(2*Bol_k)/(Me*x)*temperature_pal(x)
 
 def Matrix_A(R,M):
     A=np.zeros(((Nv),(Nv)))
