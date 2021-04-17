@@ -42,7 +42,7 @@ pal_v = np.linspace(-Mv, Mv, Nv)
 per_v = np.linspace(-Mv, Mv, Nv)
 delv=pal_v[1]-pal_v[0]
 print(delv)
-Nr=50      #radial step number
+Nr=30      #radial step number
 r_s=696340000.
 z=np.linspace(i_solar_r, f_solar_r, Nr)
 delz=z[1]-z[0]
@@ -578,7 +578,7 @@ f_temp=np.zeros(shape = (Nr*Nv**2, 1))
 f_temp[:,:]=f_1[:,:]
 kl=50
 
-timestep=3000 #700
+timestep=500 #700
 Normvalue=np.zeros(shape = (timestep))
 for k in range(timestep):
     print(k)

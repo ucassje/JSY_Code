@@ -168,7 +168,7 @@ def U_solar(r):
         for u in range(Nr):
             if abs(z[u]-r)<0.5*delz:
                 l=u
-        return U_f*(np.exp(r/20.)-np.exp(-r/20.))/(np.exp(r/20.)+np.exp(-r/20.))+Bulk[l] 
+        return U_f*(np.exp(r/20.)-np.exp(-r/20.))/(np.exp(r/20.)+np.exp(-r/20.))#+Bulk[l] 
 
 def temperature_pal(r):
         l=0
