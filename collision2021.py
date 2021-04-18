@@ -55,7 +55,7 @@ print(delt)
 Fv=delt/delv
 Fvv=delt/(delv)**2
 Fz=delt/delz
-U_f=10*800000./v_Ae_0
+U_f=800000./v_Ae_0
 T_e=10*10**5; #5*(10**(5))
 T_e_back=10*(10**(5));
 Bol_k=1.3807*(10**(-23));
@@ -992,6 +992,7 @@ ax.set_ylabel(r'$Temperature (K)$', fontsize=28)
 ax.plot(z,(1/3)*(Temperature_pal+2*Temperature_per),linewidth=3.0, color='k',label=r'$T_{total}$');
 ax.plot(z,Temperature_per,linewidth=3.0, color='b',label=r'$T_\perp$');
 ax.plot(z,Temperature_pal,linewidth=3.0, color='r',label=r'$T_\parallel$');
+ax.plot(z,max(Temperature_pal)*(z[0]/z)**0.8,linewidth=3.0, color='k',linestyle='--',label=r'$1/r^{0.8} \ Profile$');
 #ax.plot(z,temperature(z),linewidth=3.0, color='k',linestyle='--',label=r'$Anaytical \ Temperature$');
 plt.legend(loc='upper right')
 plt.savefig(f'{path_current}figure/temperature.png')
@@ -1081,10 +1082,10 @@ ax.set_xlim([z[0],z[Nr-1]])
 ax.set_ylim([min(Density),max(Density)])
 ax.set_xlabel(r'$r/r_s$', fontsize=28)
 ax.set_ylabel(r'$n_e (m^{-3})$', fontsize=28)
-ax.plot(z,Density,linewidth=3.0, color='k',label=r'$Numerical \ Density$');
-ax.plot(z,max(Density)*(z[0]/z)**2,linewidth=3.0, color='k',linestyle='--',label=r'$Anaytical \ 1/r^{2} \ Density$');
-ax.plot(z,max(Density)*(z[0]/z)**2*(WS[0]/(WS)),linewidth=3.0, color='b',linestyle='dashdot',label=r'$Anaytical \ 1/Ur^{2} \ Density$');
-ax.plot(z,max(Density)*(z[0]/z)**2*(WS[0]+Bulk[0])/(WS+Bulk),linewidth=3.0, color='r',linestyle='dotted',label=r'$Anaytical \ 1/(U+U_{bulk})r^{2} \ Density$');
+ax.plot(z,Density,linewidth=3.0, color='k',label=r'$Calculated \ Density$');
+ax.plot(z,max(Density)*(z[0]/z)**2,linewidth=3.0, color='r',linestyle='--',label=r'$1/r^{2} \ Profile$');
+ax.plot(z,max(Density)*(z[0]/z)**2*(WS[0]/(WS)),linewidth=3.0, color='b',linestyle='dashdot',label=r'$1/(Ur^{2}) \ Profile$');
+#ax.plot(z,max(Density)*(z[0]/z)**2*(WS[0]+Bulk[0])/(WS+Bulk),linewidth=3.0, color='r',linestyle='dotted',label=r'$Anaytical \ 1/(U+U_{bulk})r^{2} \ Density$');
 plt.legend(loc='upper right')
 plt.savefig(f'{path_current}figure/density.png')
 plt.clf()
