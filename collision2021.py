@@ -540,7 +540,7 @@ solu3=np.zeros(shape = (Nv))
 solu4=np.zeros(shape = (Nv))
 cont_lev = np.linspace(-10,0,25)
 difference=np.zeros(shape = ((Nr)*(Nv)*(Nv), 1))
-
+timestep=1
 o=np.linspace(1, timestep, timestep)
 
 plt.figure(figsize=(20,15))
