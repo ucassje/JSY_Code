@@ -586,7 +586,7 @@ for r in range(Nr):
    ax.yaxis.set_ticks_position('left')
    plt.rc('font', size=8)
    plt.tick_params(labelsize=8)
-   plt.text(pal_v[Nv-2],0.1,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=10)
+   plt.text(pal_v[Nv-3],0.1,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=10)
    plt.text(-0.,pal_v[Nv-2],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=10)
    plt.text(pal_v[Nv-9],pal_v[Nv-2], r'$r/r_s=$' "%.2f" % z[r], fontsize=12)
    #plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
