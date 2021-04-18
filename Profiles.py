@@ -16,7 +16,7 @@ r_s=696340000
 U_f=800
 U_f2=800000
 Omega=2.7*10**(-6)
-i_solar_r=10
+i_solar_r=5
 f_solar_r=50
 z=np.linspace(i_solar_r, f_solar_r, 100)
 T_e=1.0;
@@ -85,7 +85,7 @@ plt.close()
 
 plt.figure(figsize=(20,15))
 plt.plot(z, U_solar(z), 'k', linewidth=3.0)
-plt.xlabel('Solar Radii',fontsize=28)
+plt.xlabel(r'$r/r_s$',fontsize=28)
 plt.ylabel('Wind Speed U [km/s]',fontsize=28)
 plt.grid()
 plt.rc('font', size=35)
