@@ -43,7 +43,7 @@ pal_v = np.linspace(-Mv, Mv, Nv)
 per_v = np.linspace(-Mv, Mv, Nv)
 delv=pal_v[1]-pal_v[0]
 print(delv)
-Nr=30      #radial step number
+Nr=50      #radial step number
 r_s=696340000.
 z=np.linspace(i_solar_r, f_solar_r, Nr)
 delz=z[1]-z[0]
@@ -115,7 +115,7 @@ def Kappa_Initial_Core(a,b,r):
    return (U_solar(z[0])/U_solar(r))*(r_s**3)*(n(r)*10**6)*(v_th_function(temperature(r))*v_th_function(temperature(r))**2)**(-1)*(2/(np.pi*(2*kappac-3)))**1.5*(gamma(kappac+1)/gamma(kappac-0.5))*(1.+(2/(2*kappac-3))*((b/v_th_function(temperature(r)))**2)+(2/(2*kappac-3))*((a/v_th_function(temperature(r)))**2))**(-kappac-1.) #(U_f/U_solar(r))*(r_s**3)*(n(r)*10**6)*(2*np.pi*kappa_v_th_function(temperature(r))**3*kappa**1.5)**(-1)*(gamma(kappa+1)/(gamma(kappa-0.5)*gamma(1.5)))*(1.+((b/kappa_v_th_function(temperature(r)))**2)/kappa+((a/kappa_v_th_function(temperature(r)))**2)/kappa)**(-kappa-1.)#+10**(-6)*(r_s**3)*(n(r)*10**6)*(np.pi**1.5*kappa_v_th_function(temperature(r))**3)**(-1)*(gamma(kappa+1)/(gamma(kappa-0.5)*kappa**1.5))*(1.+((b/(kappa_v_th_function(temperature(r))*100000))**2)/kappa+((a/(kappa_v_th_function(temperature(r))*100000))**2)/kappa)**(-kappa-1.) #(((7.5*10**9/r_s)/c)**2+0.05*np.exp(-(c-23)**2))*
 #(r_s**3)*(n(r)*10**6)/(v_th_function(temperature(r))**3*np.pi**(3/2))*np.exp(-a**2/v_th_function(temperature(r))**2-b**2/v_th_function(temperature(r))**2)
          
-f_1 = np.load('data.npy')
+f_1 = np.load('3000.npy')
 
 Density=np.zeros(shape = (Nr))
 for r in range(Nr):
@@ -406,15 +406,15 @@ def Matrix_A(R,M):
             for j in range(Nv):
                     if R==0:
                             if i==0:
-                                    A[i,j] =1-0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))+(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))-(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))+0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])+0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==0 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==1 else (Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==2 else 0
+                                    A[i,j] =1-0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))+0*(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))-0*(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))-0*(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))-0*(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))+0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])+0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==0 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==1 else 0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==2 else 0
                             elif i==1:
-                                    A[i,j] =-0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==0 else 1-0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))+(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))-(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))+0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])+0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==1 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==2 else (Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==3 else 0
+                                    A[i,j] =-0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==0 else 1-0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))+0*(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))-0*(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))-0*(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))-0*(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))+0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])+0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==1 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==2 else 0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==3 else 0
                             elif i==Nv-1:
-                                    A[i,j] =(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==Nv-3 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-2 else 1-0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))+(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))-(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))+0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])+0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==Nv-1 else 0
+                                    A[i,j] =0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==Nv-3 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-2 else 1-0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))+0*(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))-0*(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))-0*(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))-0*(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))+0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])+0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==Nv-1 else 0
                             elif i==Nv-2:
-                                    A[i,j] =(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==Nv-4 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-3 else 1-0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))+(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))-(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))+0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])+0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==Nv-2 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-1 else 0
+                                    A[i,j] =0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==Nv-4 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-3 else 1-0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))+0*(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))-0*(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))-0*(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))-0*(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))+0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])+0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==Nv-2 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-1 else 0
                             else:
-                                    A[i,j] =(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==i-2 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==i-1 else 1-0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))+(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))-(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))+0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])+0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==i else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==i+1 else (Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==i+2 else 0
+                                    A[i,j] =0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==i-2 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==i-1 else 1-0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))+0*(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))-0*(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))-0*(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))-0*(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))+0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])+0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==i else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==i+1 else 0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==i+2 else 0
                     elif R==Nr-1:
                             if i==0:
                                     A[i,j] =1-(delt/2)*(-U_solar(z[R])*dlnB(z[R]))+(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))-(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))-(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))+0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])+(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==0 else rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==1 else (Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==2 else 0
@@ -446,11 +446,11 @@ def Matrix_B(R,M):
         for j in range(Nv):
                 if R==0:
                         if i==0:
-                                B[i,j] =0*rect_v(per_v[M])*(Fv/4)*((U_solar(z[R])+pal_v[i]*cos(z[R]))*dlnB(z[R])*per_v[M]/2)+(Fv/4)*(-Col*H_perp(pal_v[i],per_v[M],z[R]))+(Fv/4)*(-Col/2*G_per_e(pal_v[i],per_v[M],z[R]))+(Fv/4)*(-Col/2*G_per_p(pal_v[i],per_v[M],z[R])) if j==0 else (Fvv/8)*(-Col*(G_pal_per_e(pal_v[i],per_v[M],z[R])+G_pal_per_p(pal_v[i],per_v[M],z[R]))) if j==1 else 0
+                                B[i,j] =0*rect_v(per_v[M])*(Fv/4)*((U_solar(z[R])+pal_v[i]*cos(z[R]))*dlnB(z[R])*per_v[M]/2)+0*(Fv/4)*(-Col*H_perp(pal_v[i],per_v[M],z[R]))+0*(Fv/4)*(-Col/2*G_per_e(pal_v[i],per_v[M],z[R]))+0*(Fv/4)*(-Col/2*G_per_p(pal_v[i],per_v[M],z[R])) if j==0 else 0*(Fvv/8)*(-Col*(G_pal_per_e(pal_v[i],per_v[M],z[R])+G_pal_per_p(pal_v[i],per_v[M],z[R]))) if j==1 else 0
                         elif i==Nv-1:
-                                B[i,j] =-(Fvv/8)*(-Col*(G_pal_per_e(pal_v[i],per_v[M],z[R])+G_pal_per_p(pal_v[i],per_v[M],z[R]))) if j==Nv-2 else 0*rect_v(per_v[M])*(Fv/4)*((U_solar(z[R])+pal_v[i]*cos(z[R]))*dlnB(z[R])*per_v[M]/2)+(Fv/4)*(-Col*H_perp(pal_v[i],per_v[M],z[R]))+(Fv/4)*(-Col/2*G_per_e(pal_v[i],per_v[M],z[R]))+(Fv/4)*(-Col/2*G_per_p(pal_v[i],per_v[M],z[R])) if j==Nv-1 else 0
+                                B[i,j] =-0*(Fvv/8)*(-Col*(G_pal_per_e(pal_v[i],per_v[M],z[R])+G_pal_per_p(pal_v[i],per_v[M],z[R]))) if j==Nv-2 else 0*rect_v(per_v[M])*(Fv/4)*((U_solar(z[R])+pal_v[i]*cos(z[R]))*dlnB(z[R])*per_v[M]/2)+0*(Fv/4)*(-Col*H_perp(pal_v[i],per_v[M],z[R]))+0*(Fv/4)*(-Col/2*G_per_e(pal_v[i],per_v[M],z[R]))+0*(Fv/4)*(-Col/2*G_per_p(pal_v[i],per_v[M],z[R])) if j==Nv-1 else 0
                         else:
-                                B[i,j] =-(Fvv/8)*(-Col*(G_pal_per_e(pal_v[i],per_v[M],z[R])+G_pal_per_p(pal_v[i],per_v[M],z[R]))) if j==i-1 else 0*rect_v(per_v[M])*(Fv/4)*((U_solar(z[R])+pal_v[i]*cos(z[R]))*dlnB(z[R])*per_v[M]/2)+(Fv/4)*(-Col*H_perp(pal_v[i],per_v[M],z[R]))+(Fv/4)*(-Col/2*G_per_e(pal_v[i],per_v[M],z[R]))+(Fv/4)*(-Col/2*G_per_p(pal_v[i],per_v[M],z[R])) if j==i else (Fvv/8)*(-Col*(G_pal_per_e(pal_v[i],per_v[M],z[R])+G_pal_per_p(pal_v[i],per_v[M],z[R]))) if j==i+1 else 0
+                                B[i,j] =-0*(Fvv/8)*(-Col*(G_pal_per_e(pal_v[i],per_v[M],z[R])+G_pal_per_p(pal_v[i],per_v[M],z[R]))) if j==i-1 else 0*rect_v(per_v[M])*(Fv/4)*((U_solar(z[R])+pal_v[i]*cos(z[R]))*dlnB(z[R])*per_v[M]/2)+0*(Fv/4)*(-Col*H_perp(pal_v[i],per_v[M],z[R]))+0*(Fv/4)*(-Col/2*G_per_e(pal_v[i],per_v[M],z[R]))+0*(Fv/4)*(-Col/2*G_per_p(pal_v[i],per_v[M],z[R])) if j==i else 0*(Fvv/8)*(-Col*(G_pal_per_e(pal_v[i],per_v[M],z[R])+G_pal_per_p(pal_v[i],per_v[M],z[R]))) if j==i+1 else 0
                 elif R==Nr-1:
                         if i==0:
                                 B[i,j] =rect_v(per_v[M])*(Fv/4)*((U_solar(z[R])+pal_v[i]*cos(z[R]))*dlnB(z[R])*per_v[M]/2)+(Fv/4)*(-Col*H_perp(pal_v[i],per_v[M],z[R]))+(Fv/4)*(-Col/2*G_per_e(pal_v[i],per_v[M],z[R]))+(Fv/4)*(-Col/2*G_per_p(pal_v[i],per_v[M],z[R])) if j==0 else (Fvv/8)*(Col*(-G_pal_per_e(pal_v[i],per_v[M],z[R])+G_pal_per_p(pal_v[i],per_v[M],z[R]))) if j==1 else 0
@@ -472,7 +472,7 @@ def Matrix_C(R,M):
     for i in range(Nv):
         for j in range(Nv):
                 if R==0:
-                        C[i,j] =(Fvv/8)*(-Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+(Fvv/8)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R]))) if j==i else 0
+                        C[i,j] =0*(Fvv/8)*(-Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+0*(Fvv/8)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R]))) if j==i else 0
                 else:
                         C[i,j] =(Fvv/8)*(-Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+(Fvv/8)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R]))) if j==i else 0 
     return C
@@ -528,15 +528,15 @@ def Matrix_Q(R,M):
         for j in range(Nv):
                 if R==0:
                         if i==0:
-                                A[i,j] =1+0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))-(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))+(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))-0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])-0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==0 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==1 else -(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==2 else 0
+                                A[i,j] =1+0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))-0*(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+0*(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))+0*(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))+0*(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))-0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])-0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==0 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==1 else -0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==2 else 0
                         elif i==1:
-                                A[i,j] =0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==0 else 1+0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))-(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))+(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))-0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])-0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==1 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==2 else -(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==3 else 0
+                                A[i,j] =0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==0 else 1+0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))-0*(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+0*(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))+0*(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))+0*(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))-0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])-0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==1 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==2 else -0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==3 else 0
                         elif i==Nv-1:
-                                A[i,j] =-(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==Nv-3 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-2 else 1+0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))-(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))+(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))-0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])-0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==Nv-1 else 0
+                                A[i,j] =-0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==Nv-3 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-2 else 1+0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))-0*(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+0*(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))+0*(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))+0*(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))-0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])-0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==Nv-1 else 0
                         elif i==Nv-2:
-                                A[i,j] =-(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==Nv-4 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-3 else 1+0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))-(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))+(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))-0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])-0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==Nv-2 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-1 else 0
+                                A[i,j] =-0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==Nv-4 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-3 else 1+0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))-0*(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+0*(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))+0*(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))+0*(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))-0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])-0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==Nv-2 else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==Nv-1 else 0
                         else:
-                                A[i,j] =-(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==i-2 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==i-1 else 1+0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))-(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))+(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))-0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])-0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==i else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==i+1 else -(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==i+2 else 0
+                                A[i,j] =-0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==i-2 else 0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])+0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))+0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==i-1 else 1+0*(delt/2)*(-U_solar(z[R])*dlnB(z[R]))-0*(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+0*(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))+0*(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))+0*(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))-0*0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])-0*(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==i else -0*rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-0*rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-0*(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==i+1 else -0*(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==i+2 else 0
                 elif R==Nr-1:
                         if i==0:
                                 A[i,j] =1+(delt/2)*(-U_solar(z[R])*dlnB(z[R]))-(Fvv/4)*(Col/2*(G_per_ee(pal_v[i],per_v[M],z[R])+G_per_pp(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_per_2e(pal_v[i],per_v[M],z[R])+G_per_2p(pal_v[i],per_v[M],z[R])))+(Fvv/4)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R])))+(delt/2)*(4*np.pi*Col)*(Collision_Core(pal_v[i],per_v[M],z[R])+(Me/Mp)*Collision_Proton(pal_v[i],per_v[M],z[R]))-0.5*(U_solar(z[R])+pal_v[i]*cos(z[R]))*(2.*delt/z[R])-(delt/2)*U_solar(z[R])*dcos(z[R])/cos(z[R]) if j==0 else -rect_v(pal_v[i])*(Fv/4)*cos(z[R])*electric(z[R])-rect_v(pal_v[i])*(Fv/4)*(-(U_solar(z[R])+pal_v[i]*cos(z[R]))*(dU_solar(z[R])/cos(z[R])-U_solar(z[R])*dcos(z[R])/(cos(z[R])**2))-(cos(z[R])*dlnB(z[R])*per_v[M]**2/2))-(Fv/4)*(-Col*H_palp(pal_v[i],per_v[M],z[R])) if j==1 else -(Fvv/8)*(-Col/2*(G_pal_2e(pal_v[i],per_v[M],z[R])+G_pal_2p(pal_v[i],per_v[M],z[R]))) if j==2 else 0
@@ -636,7 +636,7 @@ f_temp=np.zeros(shape = (Nr*Nv**2, 1))
 f_temp[:,:]=f_1[:,:]
 kl=50
 
-timestep=3000 #700
+timestep=1000 #700
 Normvalue=np.zeros(shape = (timestep))
 for k in range(timestep):
     print(k)
@@ -782,79 +782,80 @@ for k in range(timestep):
             #plt.savefig(f'{path_current}temperature/{k}.png')
             #plt.clf()
             #plt.close()
-            nu=delt*(1+k)
-            solu1=np.zeros(shape = (Nv, Nv))
-            for j in range(Nv):
-                for i in range(Nv):
-                        if f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
-                                solu1[j,i]=0
-                        elif f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
-                                solu1[j,i]=np.log10(f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
-                        else:
-                                solu1[j,i]=-10
-            fig = plt.figure()
-            fig.set_dpi(500)
-            plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
-            ax = plt.gca()
-            ax.spines['left'].set_position('center')
-            ax.spines['left'].set_smart_bounds(True)
-            ax.spines['bottom'].set_position('zero')
-            ax.spines['bottom'].set_smart_bounds(True)
-            ax.spines['right'].set_color('none')
-            ax.spines['top'].set_color('none')
-            ax.xaxis.set_ticks_position('bottom')
-            plt.axis('equal')
-            ax.xaxis.set_ticks_position('bottom')
-            ax.yaxis.set_ticks_position('left')
-            plt.rc('font', size=8)
-            plt.tick_params(labelsize=8)
-            plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
-            plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[10], fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
-            plt.colorbar(label=r'$Log(F/F_{MAX})$')
-            plt.savefig(f'{path_current}r=10/{k}.png')
-            plt.clf()
-            plt.close()
 
-            nu=delt*(1+k)
-            solu1=np.zeros(shape = (Nv, Nv))
-            for j in range(Nv):
-                for i in range(Nv):
-                        if f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
-                                solu1[j,i]=0
-                        elif f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
-                                solu1[j,i]=np.log10(f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
-                        else:
-                                solu1[j,i]=-10
-            fig = plt.figure()
-            fig.set_dpi(500)
-            plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
-            ax = plt.gca()
-            ax.spines['left'].set_position('center')
-            ax.spines['left'].set_smart_bounds(True)
-            ax.spines['bottom'].set_position('zero')
-            ax.spines['bottom'].set_smart_bounds(True)
-            ax.spines['right'].set_color('none')
-            ax.spines['top'].set_color('none')
-            ax.xaxis.set_ticks_position('bottom')
-            plt.axis('equal')
-            ax.xaxis.set_ticks_position('bottom')
-            ax.yaxis.set_ticks_position('left')
-            plt.rc('font', size=8)
-            plt.tick_params(labelsize=8)
-            plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
-            plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[26], fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
-            plt.colorbar(label=r'$Log(F/F_{MAX})$')
-            plt.savefig(f'{path_current}r=26/{k}.png')
-            plt.clf()
-            plt.close()
+            #nu=delt*(1+k)
+            #solu1=np.zeros(shape = (Nv, Nv))
+            #for j in range(Nv):
+            #    for i in range(Nv):
+            #            if f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
+            #                    solu1[j,i]=0
+            #            elif f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
+            #                    solu1[j,i]=np.log10(f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
+            #            else:
+            #                    solu1[j,i]=-10
+            #fig = plt.figure()
+            #fig.set_dpi(500)
+            #plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
+            #ax = plt.gca()
+            #ax.spines['left'].set_position('center')
+            #ax.spines['left'].set_smart_bounds(True)
+            #ax.spines['bottom'].set_position('zero')
+            #ax.spines['bottom'].set_smart_bounds(True)
+            #ax.spines['right'].set_color('none')
+            #ax.spines['top'].set_color('none')
+            #ax.xaxis.set_ticks_position('bottom')
+            #plt.axis('equal')
+            #ax.xaxis.set_ticks_position('bottom')
+            #ax.yaxis.set_ticks_position('left')
+            #plt.rc('font', size=8)
+            #plt.tick_params(labelsize=8)
+            #plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
+            #plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[10], fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
+            #plt.colorbar(label=r'$Log(F/F_{MAX})$')
+            #plt.savefig(f'{path_current}r=10/{k}.png')
+            #plt.clf()
+            #plt.close()
+
+            #nu=delt*(1+k)
+            #solu1=np.zeros(shape = (Nv, Nv))
+            #for j in range(Nv):
+            #    for i in range(Nv):
+            #            if f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
+            #                    solu1[j,i]=0
+            #            elif f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
+            #                    solu1[j,i]=np.log10(f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
+            #            else:
+            #                    solu1[j,i]=-10
+            #fig = plt.figure()
+            #fig.set_dpi(500)
+            #plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
+            #ax = plt.gca()
+            #ax.spines['left'].set_position('center')
+            #ax.spines['left'].set_smart_bounds(True)
+            #ax.spines['bottom'].set_position('zero')
+            #ax.spines['bottom'].set_smart_bounds(True)
+            #ax.spines['right'].set_color('none')
+            #ax.spines['top'].set_color('none')
+            #ax.xaxis.set_ticks_position('bottom')
+            #plt.axis('equal')
+            #ax.xaxis.set_ticks_position('bottom')
+            #ax.yaxis.set_ticks_position('left')
+            #plt.rc('font', size=8)
+            #plt.tick_params(labelsize=8)
+            #plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
+            #plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[26], fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
+            #plt.colorbar(label=r'$Log(F/F_{MAX})$')
+            #plt.savefig(f'{path_current}r=26/{k}.png')
+            #plt.clf()
+            #plt.close()
 
 
     kl=kl+1
