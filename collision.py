@@ -632,7 +632,7 @@ f_temp=np.zeros(shape = (Nr*Nv**2, 1))
 f_temp[:,:]=f_1[:,:]
 kl=50
 
-timestep=500 #700
+timestep=1000 #700
 Normvalue=np.zeros(shape = (timestep))
 for k in range(timestep):
     print(k)
@@ -787,8 +787,8 @@ for k in range(timestep):
     for R in range(Nr):
             for J in range(Nv):
                     for I in range(Nv):
-                            if R==Nr-1:#and pal_v[I]>0 and (pal_v[I]**2+per_v[J]**2)**0.5<5
-                                    norm=norm+abs((f_next[R*(Nv)*(Nv)+J*Nv+I]/np.max(f_next)-f_pre[R*(Nv)*(Nv)+J*Nv+I]/np.max(f_pre)))**2
+                            if np.log10(f_next[R*(Nv)*(Nv)+J*Nv+I]/np.max(f_next))>-5:
+                                    norm=norm+abs((f_next[R*(Nv)*(Nv)+J*Nv+I]/np.max(f_next)-f_pre[R*(Nv)*(Nv)+J*Nv+I]/np.max(f_next)))**2
     Normvalue[k]=norm**0.5
     print(norm**0.5)
 
