@@ -32,7 +32,7 @@ def B_0(r):
         return 10*(215/r)**2
 
 v_Ae_0=(B_0(215)*10**(-9))/(4.*np.pi*10**(-7)*9.1094*10**(-31)*n_0(215)*10**6)**0.5
-print(v_Ae_0)
+
 q=1.6022*(10**(-19))
 Me=9.1094*(10**(-31))
 Mp=1.6726*(10**(-27))
@@ -629,11 +629,14 @@ del QQQ
 #np.set_printoptions(threshold=np.inf)
 #print(AQ)
 
+X2,Y2 = np.meshgrid(pal_v,per_v)
+cont_lev = np.linspace(-10,0,25)
+
 f_temp=np.zeros(shape = (Nr*Nv**2, 1))
 f_temp[:,:]=f_1[:,:]
 kl=50
 
-timestep=1000 #700
+timestep=3000 #700
 Normvalue=np.zeros(shape = (timestep))
 for k in range(timestep):
     print(k)
@@ -727,56 +730,129 @@ for k in range(timestep):
            
     if kl==50:
             kl=0
-            Density=np.zeros(shape = (Nr))
-            for r in range(Nr):
-                   tempDensity=0
-                   for j in range(Nv):
-                      for i in range(Nv):
-                              if per_v[j]<0:
-                                      tempDensity=tempDensity
-                              else:
-                                      tempDensity=tempDensity+2*np.pi*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-                   Density[r]=tempDensity/(r_s**3)
-            plt.figure(figsize=(20,15))
-            plt.grid()
+            #Density=np.zeros(shape = (Nr))
+            #for r in range(Nr):
+            #       tempDensity=0
+            #       for j in range(Nv):
+            #          for i in range(Nv):
+            #                  if per_v[j]<0:
+            #                          tempDensity=tempDensity
+            #                  else:
+            #                          tempDensity=tempDensity+2*np.pi*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+            #       Density[r]=tempDensity/(r_s**3)
+            #plt.figure(figsize=(20,15))
+            #plt.grid()
+            #ax = plt.gca()
+            #plt.rc('font', size=35)
+            #plt.tick_params(labelsize=40)
+            #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+            #ax.set_xlim([z[0],z[Nr-1]])
+            #ax.set_ylim([min(Density),max(Density)])
+            #ax.set_xlabel(r'$r/r_s$', fontsize=28)
+            #ax.set_ylabel(r'$n_e (m^{-3})$', fontsize=28)
+            #ax.plot(z,Density,linewidth=3.0, color='k',label=r'$Numerical \ Density$');
+            #ax.plot(z,max(Density)*(z[0]/z)**2,linewidth=3.0, color='k',linestyle='--',label=r'$Anaytical \ 1/r^{2} \ Density$');
+            #plt.legend(loc='upper right')
+            #plt.savefig(f'{path_current}density/{k}.png')
+            #plt.clf()
+            #plt.close()
+            #Temperature_pal=np.zeros(shape = (Nr))
+            #for r in range(Nr):
+            #       temptemp=0
+            #       for j in range(Nv):
+            #          for i in range(Nv):
+            #                  if per_v[j]<0:
+            #                          temptemp=temptemp
+            #                  else:
+            #                          temptemp=temptemp+2*np.pi*((pal_v[i])**2)*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+            #       Temperature_pal[r]=v_Ae_0**2*Me*temptemp/((r_s**3)*Density[r]*Bol_k)
+            #plt.figure(figsize=(20,15))
+            #plt.grid()
+            #ax = plt.gca()
+            #plt.rc('font', size=35)
+            #plt.tick_params(labelsize=40)
+            #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+            #ax.set_xlim([z[0],z[Nr-1]])
+            #ax.set_ylim([temperature(f_solar_r),temperature(i_solar_r)])
+            #ax.set_xlabel(r'$r/r_s$', fontsize=28)
+            #ax.set_ylabel(r'$T$', fontsize=28)
+            #ax.plot(z,Temperature_pal,linewidth=3.0, color='r',label=r'$Numerical \ Temperature_{pal}$');
+            #ax.plot(z,temperature(z),linewidth=3.0, color='k',linestyle='--',label=r'$Anaytical \ Temperature$');
+            #plt.legend(loc='upper right')
+            #plt.savefig(f'{path_current}temperature/{k}.png')
+            #plt.clf()
+            #plt.close()
+            nu=delt*(1+k)
+            solu1=np.zeros(shape = (Nv, Nv))
+            for j in range(Nv):
+                for i in range(Nv):
+                        if f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
+                                solu1[j,i]=0
+                        elif f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
+                                solu1[j,i]=np.log10(f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
+                        else:
+                                solu1[j,i]=-10
+            fig = plt.figure()
+            fig.set_dpi(500)
+            plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
             ax = plt.gca()
-            plt.rc('font', size=35)
-            plt.tick_params(labelsize=40)
-            plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-            ax.set_xlim([z[0],z[Nr-1]])
-            ax.set_ylim([min(Density),max(Density)])
-            ax.set_xlabel(r'$r/r_s$', fontsize=28)
-            ax.set_ylabel(r'$n_e (m^{-3})$', fontsize=28)
-            ax.plot(z,Density,linewidth=3.0, color='k',label=r'$Numerical \ Density$');
-            ax.plot(z,max(Density)*(z[0]/z)**2,linewidth=3.0, color='k',linestyle='--',label=r'$Anaytical \ 1/r^{2} \ Density$');
-            plt.legend(loc='upper right')
-            plt.savefig(f'{path_current}density/{k}.png')
+            ax.spines['left'].set_position('center')
+            ax.spines['left'].set_smart_bounds(True)
+            ax.spines['bottom'].set_position('zero')
+            ax.spines['bottom'].set_smart_bounds(True)
+            ax.spines['right'].set_color('none')
+            ax.spines['top'].set_color('none')
+            ax.xaxis.set_ticks_position('bottom')
+            plt.axis('equal')
+            ax.xaxis.set_ticks_position('bottom')
+            ax.yaxis.set_ticks_position('left')
+            plt.rc('font', size=8)
+            plt.tick_params(labelsize=8)
+            plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
+            plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[10], fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
+            plt.colorbar(label=r'$Log(F/F_{MAX})$')
+            plt.savefig(f'{path_current}r=10/{k}.png')
             plt.clf()
             plt.close()
-            Temperature_pal=np.zeros(shape = (Nr))
-            for r in range(Nr):
-                   temptemp=0
-                   for j in range(Nv):
-                      for i in range(Nv):
-                              if per_v[j]<0:
-                                      temptemp=temptemp
-                              else:
-                                      temptemp=temptemp+2*np.pi*((pal_v[i])**2)*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-                   Temperature_pal[r]=v_Ae_0**2*Me*temptemp/((r_s**3)*Density[r]*Bol_k)
-            plt.figure(figsize=(20,15))
-            plt.grid()
+
+            nu=delt*(1+k)
+            solu1=np.zeros(shape = (Nv, Nv))
+            for j in range(Nv):
+                for i in range(Nv):
+                        if f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
+                                solu1[j,i]=0
+                        elif f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
+                                solu1[j,i]=np.log10(f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
+                        else:
+                                solu1[j,i]=-10
+            fig = plt.figure()
+            fig.set_dpi(500)
+            plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
             ax = plt.gca()
-            plt.rc('font', size=35)
-            plt.tick_params(labelsize=40)
-            plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-            ax.set_xlim([z[0],z[Nr-1]])
-            ax.set_ylim([temperature(f_solar_r),temperature(i_solar_r)])
-            ax.set_xlabel(r'$r/r_s$', fontsize=28)
-            ax.set_ylabel(r'$T$', fontsize=28)
-            ax.plot(z,Temperature_pal,linewidth=3.0, color='r',label=r'$Numerical \ Temperature_{pal}$');
-            ax.plot(z,temperature(z),linewidth=3.0, color='k',linestyle='--',label=r'$Anaytical \ Temperature$');
-            plt.legend(loc='upper right')
-            plt.savefig(f'{path_current}temperature/{k}.png')
+            ax.spines['left'].set_position('center')
+            ax.spines['left'].set_smart_bounds(True)
+            ax.spines['bottom'].set_position('zero')
+            ax.spines['bottom'].set_smart_bounds(True)
+            ax.spines['right'].set_color('none')
+            ax.spines['top'].set_color('none')
+            ax.xaxis.set_ticks_position('bottom')
+            plt.axis('equal')
+            ax.xaxis.set_ticks_position('bottom')
+            ax.yaxis.set_ticks_position('left')
+            plt.rc('font', size=8)
+            plt.tick_params(labelsize=8)
+            plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
+            plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[26], fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
+            plt.colorbar(label=r'$Log(F/F_{MAX})$')
+            plt.savefig(f'{path_current}r=26/{k}.png')
             plt.clf()
             plt.close()
 
