@@ -55,7 +55,7 @@ print(delt)
 Fv=delt/delv
 Fvv=delt/(delv)**2
 Fz=delt/delz
-U_f=400000./v_Ae_0
+U_f=800000./v_Ae_0
 T_e=10*10**5; #5*(10**(5))
 T_e_back=10*(10**(5));
 Bol_k=1.3807*(10**(-23));
@@ -733,8 +733,8 @@ for k in range(timestep):
     for R in range(Nr):
             for J in range(Nv):
                     for I in range(Nv):
-                            if R==Nr-1:#and pal_v[I]>0 and (pal_v[I]**2+per_v[J]**2)**0.5<5
-                                    norm=norm+abs((f_next[R*(Nv)*(Nv)+J*Nv+I]/np.max(f_next)-f_pre[R*(Nv)*(Nv)+J*Nv+I]/np.max(f_pre)))**2
+                            #if R==Nr-1:#and pal_v[I]>0 and (pal_v[I]**2+per_v[J]**2)**0.5<5
+                            norm=norm+abs((f_next[R*(Nv)*(Nv)+J*Nv+I]/np.max(f_next)-f_pre[R*(Nv)*(Nv)+J*Nv+I]/np.max(f_next)))**2
     Normvalue[k]=norm**0.5
     print(norm**0.5)
 
