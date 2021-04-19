@@ -727,6 +727,7 @@ for k in range(timestep):
             #plt.savefig(f'{path_current}temperature/{k}.png')
             #plt.clf()
             #plt.close()
+            nu=delt*(1+k)
             solu1=np.zeros(shape = (Nv, Nv))
             for j in range(Nv):
                 for i in range(Nv):
@@ -763,6 +764,7 @@ for k in range(timestep):
             plt.clf()
             plt.close()
 
+            nu=delt*(1+k)
             solu1=np.zeros(shape = (Nv, Nv))
             for j in range(Nv):
                 for i in range(Nv):
