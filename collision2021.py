@@ -574,6 +574,9 @@ del QQQ
 #np.set_printoptions(threshold=np.inf)
 #print(AQ)
 
+X2,Y2 = np.meshgrid(pal_v,per_v)
+cont_lev = np.linspace(-10,0,25)
+
 f_temp=np.zeros(shape = (Nr*Nv**2, 1))
 f_temp[:,:]=f_1[:,:]
 kl=50
@@ -724,6 +727,7 @@ for k in range(timestep):
             #plt.savefig(f'{path_current}temperature/{k}.png')
             #plt.clf()
             #plt.close()
+            solu1=np.zeros(shape = (Nv, Nv))
             for j in range(Nv):
                 for i in range(Nv):
                         if f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
@@ -759,6 +763,7 @@ for k in range(timestep):
             plt.clf()
             plt.close()
 
+            solu1=np.zeros(shape = (Nv, Nv))
             for j in range(Nv):
                 for i in range(Nv):
                         if f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
