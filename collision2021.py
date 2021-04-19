@@ -42,7 +42,7 @@ pal_v = np.linspace(-Mv, Mv, Nv)
 per_v = np.linspace(-Mv, Mv, Nv)
 delv=pal_v[1]-pal_v[0]
 print(delv)
-Nr=30      #radial step number
+Nr=50      #radial step number
 r_s=696340000.
 z=np.linspace(i_solar_r, f_solar_r, Nr)
 delz=z[1]-z[0]
@@ -859,7 +859,7 @@ plt.rc('font', size=35)
 plt.tick_params(labelsize=40)
 plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 ax.set_xlim([o[0],o[timestep-1]])
-ax.set_ylim([10**(-6),10**(-2)])
+ax.set_ylim([10**(-6),10**(-4)])
 ax.set_xlabel(r'$t$', fontsize=28)
 ax.set_ylabel(r'$norm$', fontsize=28)
 ax.plot(o,Normvalue,linewidth=3.0, color='k');
