@@ -579,7 +579,7 @@ cont_lev = np.linspace(-10,0,25)
 
 f_temp=np.zeros(shape = (Nr*Nv**2, 1))
 f_temp[:,:]=f_1[:,:]
-kl=50
+kl=1
 
 timestep=50 #700
 Normvalue=np.zeros(shape = (timestep))
