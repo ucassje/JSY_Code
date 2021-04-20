@@ -698,7 +698,7 @@ plt.close()
 
 P_flux=np.zeros(shape = (Nr))
 for r in range(Nr):
-        P_flux[r]=z[r]**2*(U_solar(z[r])+Bulk[r])*Density[r]
+        P_flux[r]=z[r]**2*(U_solar(z[r]))*Density[r]
 plt.figure(figsize=(20,15))
 plt.grid()
 ax = plt.gca()
