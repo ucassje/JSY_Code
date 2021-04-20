@@ -636,6 +636,7 @@ ax.set_ylabel(r'$Temperature (K)$', fontsize=28)
 ax.plot(z,(1/3)*(Temperature_pal+2*Temperature_per),linewidth=3.0, color='k',label=r'$T_{total}$');
 ax.plot(z,Temperature_per,linewidth=3.0, color='b',label=r'$T_\perp$');
 ax.plot(z,Temperature_pal,linewidth=3.0, color='r',label=r'$T_\parallel$');
+ax.plot(z,max(Temperature_pal)*(z[0]/z)**0.8,linewidth=3.0, color='k',linestyle='--',label=r'$1/r^{0.8} \ Profile$');
 #ax.plot(z,temperature(z),linewidth=3.0, color='k',linestyle='--',label=r'$Anaytical \ Temperature$');
 plt.legend(loc='upper right')
 plt.savefig(f'{path_current}figure/temperature.png')
