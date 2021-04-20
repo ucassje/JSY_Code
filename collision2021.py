@@ -42,7 +42,7 @@ pal_v = np.linspace(-Mv, Mv, Nv)
 per_v = np.linspace(-Mv, Mv, Nv)
 delv=pal_v[1]-pal_v[0]
 print(delv)
-Nr=50      #radial step number
+Nr=30      #radial step number
 r_s=696340000.
 z=np.linspace(i_solar_r, f_solar_r, Nr)
 delz=z[1]-z[0]
@@ -583,12 +583,37 @@ kl=50
 
 timestep=3000 #700
 Normvalue=np.zeros(shape = (timestep))
+Normvalue_bulk=np.zeros(shape = (timestep))
 for k in range(timestep):
     print(k)
     f_pre=np.zeros(shape = (Nr*Nv**2, 1))
     f_next=np.zeros(shape = (Nr*Nv**2, 1))
     f_temp1=np.zeros(shape = (Nr*Nv**2, 1))
     f_pre[:,:]=f_1[:,:]
+
+    Density_pre=np.zeros(shape = (Nr))
+    for r in range(Nr):
+        tempDensity=0
+        for j in range(Nv):
+            for i in range(Nv):
+                if per_v[j]<0:
+                      tempDensity=tempDensity
+                else:
+                      tempDensity=tempDensity+2*np.pi*f_pre[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+        Density_pre[r]=tempDensity/(r_s**3)
+
+
+
+    Bulk_pre=np.zeros(shape = (Nr))
+    for r in range(Nr):
+        tempBulk=0
+        for j in range(Nv):
+            for i in range(Nv):
+                if per_v[j]>=0:
+                      tempBulk=tempBulk+2*np.pi*pal_v[i]*f_pre[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+                else:
+                      tempBulk=tempBulk
+        Bulk_pre[r]=tempBulk/((r_s**3)*Density_pre[r])
     
     f_1=dot(AQ, f_1)       
 
@@ -673,8 +698,8 @@ for k in range(timestep):
                                     if f_1[(r)*(Nv)*(Nv)+j*Nv+i]<0:
                                             f_1[(r)*(Nv)*(Nv)+j*Nv+i]=mini
            
-    if kl==50:
-            kl=0
+    #if kl==50:
+    #        kl=0
             #Density=np.zeros(shape = (Nr))
             #for r in range(Nr):
             #       tempDensity=0
@@ -727,83 +752,115 @@ for k in range(timestep):
             #plt.savefig(f'{path_current}temperature/{k}.png')
             #plt.clf()
             #plt.close()
-            nu=delt*(1+k)
-            solu1=np.zeros(shape = (Nv, Nv))
-            for j in range(Nv):
-                for i in range(Nv):
-                        if f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
-                                solu1[j,i]=0
-                        elif f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
-                                solu1[j,i]=np.log10(f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
-                        else:
-                                solu1[j,i]=-10
-            fig = plt.figure()
-            fig.set_dpi(500)
-            plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
-            ax = plt.gca()
-            ax.spines['left'].set_position('center')
-            ax.spines['left'].set_smart_bounds(True)
-            ax.spines['bottom'].set_position('zero')
-            ax.spines['bottom'].set_smart_bounds(True)
-            ax.spines['right'].set_color('none')
-            ax.spines['top'].set_color('none')
-            ax.xaxis.set_ticks_position('bottom')
-            plt.axis('equal')
-            ax.xaxis.set_ticks_position('bottom')
-            ax.yaxis.set_ticks_position('left')
-            plt.rc('font', size=8)
-            plt.tick_params(labelsize=8)
-            plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
-            plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[10], fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
-            plt.colorbar(label=r'$Log(F/F_{MAX})$')
-            plt.savefig(f'{path_current}r=10/{k}.png')
-            plt.clf()
-            plt.close()
 
-            nu=delt*(1+k)
-            solu1=np.zeros(shape = (Nv, Nv))
-            for j in range(Nv):
-                for i in range(Nv):
-                        if f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
-                                solu1[j,i]=0
-                        elif f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
-                                solu1[j,i]=np.log10(f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
-                        else:
-                                solu1[j,i]=-10
-            fig = plt.figure()
-            fig.set_dpi(500)
-            plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
-            ax = plt.gca()
-            ax.spines['left'].set_position('center')
-            ax.spines['left'].set_smart_bounds(True)
-            ax.spines['bottom'].set_position('zero')
-            ax.spines['bottom'].set_smart_bounds(True)
-            ax.spines['right'].set_color('none')
-            ax.spines['top'].set_color('none')
-            ax.xaxis.set_ticks_position('bottom')
-            plt.axis('equal')
-            ax.xaxis.set_ticks_position('bottom')
-            ax.yaxis.set_ticks_position('left')
-            plt.rc('font', size=8)
-            plt.tick_params(labelsize=8)
-            plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
-            plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[26], fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
-            plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
-            plt.colorbar(label=r'$Log(F/F_{MAX})$')
-            plt.savefig(f'{path_current}r=26/{k}.png')
-            plt.clf()
-            plt.close()
+            #nu=delt*(1+k)
+            #solu1=np.zeros(shape = (Nv, Nv))
+            #for j in range(Nv):
+            #    for i in range(Nv):
+            #            if f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
+            #                    solu1[j,i]=0
+            #            elif f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
+            #                    solu1[j,i]=np.log10(f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
+            #            else:
+            #                    solu1[j,i]=-10
+            #fig = plt.figure()
+            #fig.set_dpi(500)
+            #plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
+            #ax = plt.gca()
+            #ax.spines['left'].set_position('center')
+            #ax.spines['left'].set_smart_bounds(True)
+            #ax.spines['bottom'].set_position('zero')
+            #ax.spines['bottom'].set_smart_bounds(True)
+            #ax.spines['right'].set_color('none')
+            #ax.spines['top'].set_color('none')
+            #ax.xaxis.set_ticks_position('bottom')
+            #plt.axis('equal')
+            #ax.xaxis.set_ticks_position('bottom')
+            #ax.yaxis.set_ticks_position('left')
+            #plt.rc('font', size=8)
+            #plt.tick_params(labelsize=8)
+            #plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
+            #plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[10], fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
+            #plt.colorbar(label=r'$Log(F/F_{MAX})$')
+            #plt.savefig(f'{path_current}r=10/{k}.png')
+            #plt.clf()
+            #plt.close()
+
+            #nu=delt*(1+k)
+            #solu1=np.zeros(shape = (Nv, Nv))
+            #for j in range(Nv):
+            #    for i in range(Nv):
+            #            if f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
+            #                    solu1[j,i]=0
+            #            elif f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
+            #                    solu1[j,i]=np.log10(f_1[(26)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
+            #            else:
+            #                    solu1[j,i]=-10
+            #fig = plt.figure()
+            #fig.set_dpi(500)
+            #plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
+            #ax = plt.gca()
+            #ax.spines['left'].set_position('center')
+            #ax.spines['left'].set_smart_bounds(True)
+            #ax.spines['bottom'].set_position('zero')
+            #ax.spines['bottom'].set_smart_bounds(True)
+            #ax.spines['right'].set_color('none')
+            #ax.spines['top'].set_color('none')
+            #ax.xaxis.set_ticks_position('bottom')
+            #plt.axis('equal')
+            #ax.xaxis.set_ticks_position('bottom')
+            #ax.yaxis.set_ticks_position('left')
+            #plt.rc('font', size=8)
+            #plt.tick_params(labelsize=8)
+            #plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
+            #plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[26], fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
+            #plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
+            #plt.colorbar(label=r'$Log(F/F_{MAX})$')
+            #plt.savefig(f'{path_current}r=26/{k}.png')
+            #plt.clf()
+            #plt.close()
             
-    kl=kl+1
+    #kl=kl+1
     
     f_next[:,:]=f_1[:,:]
+
+    Density_next=np.zeros(shape = (Nr))
+    for r in range(Nr):
+        tempDensity=0
+        for j in range(Nv):
+            for i in range(Nv):
+                if per_v[j]<0:
+                      tempDensity=tempDensity
+                else:
+                      tempDensity=tempDensity+2*np.pi*f_next[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+        Density_next[r]=tempDensity/(r_s**3)
+
+
+
+    Bulk_next=np.zeros(shape = (Nr))
+    for r in range(Nr):
+        tempBulk=0
+        for j in range(Nv):
+            for i in range(Nv):
+                if per_v[j]>=0:
+                      tempBulk=tempBulk+2*np.pi*pal_v[i]*f_next[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+                else:
+                      tempBulk=tempBulk
+        Bulk_next[r]=tempBulk/((r_s**3)*Density_next[r])
+
+    norm_bulk=0
+    for R in range(Nr):
+            norm_bulk=norm_bulk+abs(Bulk_next[R]-Bulk_pre[R])**2
+    Normvalue_bulk[k]=norm_bulk**0.5
+    print(norm**0.5)
+    
     norm=0
     for R in range(Nr):
             for J in range(Nv):
@@ -867,6 +924,22 @@ plt.savefig(f'{path_current}figure/norm.png')
 plt.clf()
 plt.close()
 
+o=np.linspace(1, timestep, timestep)
+
+plt.figure(figsize=(20,15))
+plt.grid()
+ax = plt.gca()
+plt.rc('font', size=35)
+plt.tick_params(labelsize=40)
+plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+ax.set_xlim([o[0],o[timestep-1]])
+ax.set_ylim([10**(-3),10**(-1)])
+ax.set_xlabel(r'$t$', fontsize=28)
+ax.set_ylabel(r'$norm_{bulk}$', fontsize=28)
+ax.plot(o,Normvalue_bulk,linewidth=3.0, color='k');
+plt.savefig(f'{path_current}figure/norm_bulk.png')
+plt.clf()
+plt.close()
 
 nu=delt*(1+k)
 for r in range(Nr):
