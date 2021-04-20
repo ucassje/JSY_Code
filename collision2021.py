@@ -18,7 +18,7 @@ from lmfit import Parameters, fit_report, minimize
 #from lmfit import Model
 import lmfit
 
-Nv=30  #velocity step number
+Nv=25  #velocity step number
 i_solar_r=5 #10
 f_solar_r=20 #30
 path_home="/Users/user/Desktop/JSY_Code/"
@@ -85,10 +85,10 @@ def dU_solar(x):
         return U_f*(1./20.)*(2./(np.exp(x/20.)+np.exp(-x/20.)))**2
 
 def cos(r):
-        return 1#(1/(1+(r*Omega/U_solar(r))**2)**0.5)
+        return (1/(1+(r*Omega/U_solar(r))**2)**0.5)
 
 def dcos_1(r):
-        return 0#((r*(Omega/U_solar(r))**2-(r*Omega/U_solar(r))**2/U_solar(r)*dU_solar(r))/(1+(r*Omega/U_solar(r))**2)**0.5)
+        return ((r*(Omega/U_solar(r))**2-(r*Omega/U_solar(r))**2/U_solar(r)*dU_solar(r))/(1+(r*Omega/U_solar(r))**2)**0.5)
 
 def temperature(r):
         return T_e*(i_solar_r/r)**(0.8) #T_e*np.exp(-(r-i_solar_r)**2/600) #T_e*np.exp(2/(r-2.2)**0.7) #(0.1*T_e-T_e)/(f_solar_r-i_solar_r)*(r-i_solar_r)+T_e
@@ -328,7 +328,7 @@ def sin(x):
         return (1/(1+(U_solar(x)/Omega*(1/x))**2)**0.5)
 
 def dcos(x):
-        return 0#-1/(1+(x*Omega/U_solar(x))**2)**1.5*(((Omega/U_solar(x))**2*x)-x**2*(Omega**2/U_solar(x)**3)*dU_solar(x))
+        return -1/(1+(x*Omega/U_solar(x))**2)**1.5*(((Omega/U_solar(x))**2*x)-x**2*(Omega**2/U_solar(x)**3)*dU_solar(x))
 
 def dsin(x):
         return ((U_solar(x)/Omega*(1/x))**2*(1/x**3))/(1+(U_solar(x)/Omega*(1/x))**2)**1.5
