@@ -859,7 +859,7 @@ for k in range(timestep):
     for R in range(Nr):
             norm_bulk=norm_bulk+abs(Bulk_next[R]-Bulk_pre[R])**2
     Normvalue_bulk[k]=norm_bulk**0.5
-    print(norm**0.5)
+    print(norm_bulk**0.5)
     
     norm=0
     for R in range(Nr):
