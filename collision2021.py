@@ -18,7 +18,7 @@ from lmfit import Parameters, fit_report, minimize
 #from lmfit import Model
 import lmfit
 
-Nv=24  #velocity step number
+Nv=30  #velocity step number
 i_solar_r=5 #10
 f_solar_r=20 #30
 path_home="/Users/user/Desktop/JSY_Code/"
@@ -591,29 +591,29 @@ for k in range(timestep):
     f_temp1=np.zeros(shape = (Nr*Nv**2, 1))
     f_pre[:,:]=f_1[:,:]
 
-    Density_pre=np.zeros(shape = (Nr))
-    for r in range(Nr):
-        tempDensity=0
-        for j in range(Nv):
-            for i in range(Nv):
-                if per_v[j]<0:
-                      tempDensity=tempDensity
-                else:
-                      tempDensity=tempDensity+2*np.pi*f_pre[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-        Density_pre[r]=tempDensity/(r_s**3)
+    #Density_pre=np.zeros(shape = (Nr))
+    #for r in range(Nr):
+    #    tempDensity=0
+    #    for j in range(Nv):
+    #        for i in range(Nv):
+    #            if per_v[j]<0:
+    #                  tempDensity=tempDensity
+    #            else:
+    #                  tempDensity=tempDensity+2*np.pi*f_pre[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+    #    Density_pre[r]=tempDensity/(r_s**3)
 
 
 
-    Bulk_pre=np.zeros(shape = (Nr))
-    for r in range(Nr):
-        tempBulk=0
-        for j in range(Nv):
-            for i in range(Nv):
-                if per_v[j]>=0:
-                      tempBulk=tempBulk+2*np.pi*pal_v[i]*f_pre[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-                else:
-                      tempBulk=tempBulk
-        Bulk_pre[r]=tempBulk/((r_s**3)*Density_pre[r])
+    #Bulk_pre=np.zeros(shape = (Nr))
+    #for r in range(Nr):
+    #    tempBulk=0
+    #    for j in range(Nv):
+    #        for i in range(Nv):
+    #            if per_v[j]>=0:
+    #                  tempBulk=tempBulk+2*np.pi*pal_v[i]*f_pre[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+    #            else:
+    #                  tempBulk=tempBulk
+    #    Bulk_pre[r]=tempBulk/((r_s**3)*Density_pre[r])
     
     f_1=dot(AQ, f_1)       
 
@@ -697,9 +697,52 @@ for k in range(timestep):
                             for i in range(Nv):
                                     if f_1[(r)*(Nv)*(Nv)+j*Nv+i]<0:
                                             f_1[(r)*(Nv)*(Nv)+j*Nv+i]=mini
+
+    
+
+
+
+    
            
-    #if kl==50:
-    #        kl=0
+    if kl==50:
+            kl=0
+            Density=np.zeros(shape = (Nr))
+            for r in range(Nr):
+                tempDensity=0
+                for j in range(Nv):
+                    for i in range(Nv):
+                        if per_v[j]<0:
+                              tempDensity=tempDensity
+                        else:
+                              tempDensity=tempDensity+2*np.pi*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+                Density[r]=tempDensity/(r_s**3)
+
+            Bulk=np.zeros(shape = (Nr))
+            for r in range(Nr):
+                tempBulk=0
+                for j in range(Nv):
+                    for i in range(Nv):
+                        if per_v[j]>=0:
+                              tempBulk=tempBulk+2*np.pi*pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+                        else:
+                              tempBulk=tempBulk
+                Bulk[r]=tempBulk/((r_s**3)*Density[r])
+
+            plt.figure(figsize=(20,15))
+            plt.grid()
+            ax = plt.gca()
+            plt.rc('font', size=35)
+            plt.tick_params(labelsize=40)
+            plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+            ax.set_xlim([z[0],z[Nr-1]])
+            ax.set_ylim([min(Bulk),max(Bulk)])
+            ax.set_xlabel(r'$r/r_s$', fontsize=28)
+            ax.set_ylabel(r'$U/v_{Ae}$', fontsize=28)
+            plt.plot(z,Bulk,linewidth=3.0, color='k');
+            plt.savefig(f'{path_current}bulk/{k}.png')
+            plt.clf()
+            plt.close()
+            
             #Density=np.zeros(shape = (Nr))
             #for r in range(Nr):
             #       tempDensity=0
@@ -827,7 +870,7 @@ for k in range(timestep):
             #plt.clf()
             #plt.close()
             
-    #kl=kl+1
+    kl=kl+1
     
     #f_next[:,:]=f_1[:,:]
 
