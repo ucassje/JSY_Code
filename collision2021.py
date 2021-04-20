@@ -617,6 +617,44 @@ for k in range(timestep):
     
     f_1=dot(AQ, f_1)       
 
+    f_next[:,:]=f_1[:,:]
+
+    Density_next=np.zeros(shape = (Nr))
+    for r in range(Nr):
+        tempDensity=0
+        for j in range(Nv):
+            for i in range(Nv):
+                if per_v[j]<0:
+                      tempDensity=tempDensity
+                else:
+                      tempDensity=tempDensity+2*np.pi*f_next[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+        Density_next[r]=tempDensity/(r_s**3)
+
+
+
+    Bulk_next=np.zeros(shape = (Nr))
+    for r in range(Nr):
+        tempBulk=0
+        for j in range(Nv):
+            for i in range(Nv):
+                if per_v[j]>=0:
+                      tempBulk=tempBulk+2*np.pi*pal_v[i]*f_next[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+                else:
+                      tempBulk=tempBulk
+        Bulk_next[r]=tempBulk/((r_s**3)*Density_next[r])
+
+    f_temp6=np.zeros(shape = (Nr*Nv**2, 1))
+    f_temp6[:,:]=f_1[:,:]
+    for r in range(Nr):
+        for j in range(Nv):
+            for i in range(Nv):
+                    if i==0 or i==Nv-1:
+                            f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]
+                    else:
+                            f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]-(2/(Density_next[r]+Density_pre[r]))*(Density_next[r]*Bulk_next[r]-Density_pre[r]*Bulk_pre[r])*(1/(2*delv))*(f_temp6[r*(Nv)*(Nv)+j*Nv+i+1]-f_temp6[r*(Nv)*(Nv)+j*Nv+i-1])
+
+
+
     f_temp4=np.zeros(shape = (Nr*Nv**2, 1))
     f_temp4[:,:]=f_1[:,:]                                
     for r in range(Nr-1):
@@ -872,42 +910,7 @@ for k in range(timestep):
             
     kl=kl+1
     
-    f_next[:,:]=f_1[:,:]
-
-    Density_next=np.zeros(shape = (Nr))
-    for r in range(Nr):
-        tempDensity=0
-        for j in range(Nv):
-            for i in range(Nv):
-                if per_v[j]<0:
-                      tempDensity=tempDensity
-                else:
-                      tempDensity=tempDensity+2*np.pi*f_next[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-        Density_next[r]=tempDensity/(r_s**3)
-
-
-
-    Bulk_next=np.zeros(shape = (Nr))
-    for r in range(Nr):
-        tempBulk=0
-        for j in range(Nv):
-            for i in range(Nv):
-                if per_v[j]>=0:
-                      tempBulk=tempBulk+2*np.pi*pal_v[i]*f_next[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-                else:
-                      tempBulk=tempBulk
-        Bulk_next[r]=tempBulk/((r_s**3)*Density_next[r])
-
-    f_temp6=np.zeros(shape = (Nr*Nv**2, 1))
-    f_temp6[:,:]=f_1[:,:]
-    for r in range(Nr):
-        for j in range(Nv):
-            for i in range(Nv):
-                    if i==0 or i==Nv-1:
-                            f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]
-                    else:
-                            f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]-(2/(Density_next[r]+Density_pre[r]))*(Density_next[r]*Bulk_next[r]-Density_pre[r]*Bulk_pre[r])*(1/(2*delv))*(f_temp6[r*(Nv)*(Nv)+j*Nv+i+1]-f_temp6[r*(Nv)*(Nv)+j*Nv+i-1])
-    
+        
     #norm_bulk=0
     #for R in range(Nr):
     #        norm_bulk=norm_bulk+abs(Bulk_next[R]-Bulk_pre[R])**2
