@@ -591,29 +591,29 @@ for k in range(timestep):
     f_temp1=np.zeros(shape = (Nr*Nv**2, 1))
     f_pre[:,:]=f_1[:,:]
 
-    #Density_pre=np.zeros(shape = (Nr))
-    #for r in range(Nr):
-    #    tempDensity=0
-    #    for j in range(Nv):
-    #        for i in range(Nv):
-    #            if per_v[j]<0:
-    #                  tempDensity=tempDensity
-    #            else:
-    #                  tempDensity=tempDensity+2*np.pi*f_pre[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-    #    Density_pre[r]=tempDensity/(r_s**3)
+    Density_pre=np.zeros(shape = (Nr))
+    for r in range(Nr):
+        tempDensity=0
+        for j in range(Nv):
+            for i in range(Nv):
+                if per_v[j]<0:
+                      tempDensity=tempDensity
+                else:
+                      tempDensity=tempDensity+2*np.pi*f_pre[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+        Density_pre[r]=tempDensity/(r_s**3)
 
 
 
-    #Bulk_pre=np.zeros(shape = (Nr))
-    #for r in range(Nr):
-    #    tempBulk=0
-    #    for j in range(Nv):
-    #        for i in range(Nv):
-    #            if per_v[j]>=0:
-    #                  tempBulk=tempBulk+2*np.pi*pal_v[i]*f_pre[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-    #            else:
-    #                  tempBulk=tempBulk
-    #    Bulk_pre[r]=tempBulk/((r_s**3)*Density_pre[r])
+    Bulk_pre=np.zeros(shape = (Nr))
+    for r in range(Nr):
+        tempBulk=0
+        for j in range(Nv):
+            for i in range(Nv):
+                if per_v[j]>=0:
+                      tempBulk=tempBulk+2*np.pi*pal_v[i]*f_pre[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+                else:
+                      tempBulk=tempBulk
+        Bulk_pre[r]=tempBulk/((r_s**3)*Density_pre[r])
     
     f_1=dot(AQ, f_1)       
 
@@ -704,44 +704,44 @@ for k in range(timestep):
 
     
            
-    if kl==50:
-            kl=0
-            Density=np.zeros(shape = (Nr))
-            for r in range(Nr):
-                tempDensity=0
-                for j in range(Nv):
-                    for i in range(Nv):
-                        if per_v[j]<0:
-                              tempDensity=tempDensity
-                        else:
-                              tempDensity=tempDensity+2*np.pi*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-                Density[r]=tempDensity/(r_s**3)
+    #if kl==50:
+    #        kl=0
+    #        Density=np.zeros(shape = (Nr))
+    #        for r in range(Nr):
+    #            tempDensity=0
+    #            for j in range(Nv):
+    #                for i in range(Nv):
+    #                    if per_v[j]<0:
+    #                          tempDensity=tempDensity
+    #                    else:
+    #                          tempDensity=tempDensity+2*np.pi*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+    #            Density[r]=tempDensity/(r_s**3)
 
-            Bulk=np.zeros(shape = (Nr))
-            for r in range(Nr):
-                tempBulk=0
-                for j in range(Nv):
-                    for i in range(Nv):
-                        if per_v[j]>=0:
-                              tempBulk=tempBulk+2*np.pi*pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-                        else:
-                              tempBulk=tempBulk
-                Bulk[r]=tempBulk/((r_s**3)*Density[r])
+    #        Bulk=np.zeros(shape = (Nr))
+    #        for r in range(Nr):
+    #            tempBulk=0
+    #            for j in range(Nv):
+    #                for i in range(Nv):
+    #                    if per_v[j]>=0:
+    #                          tempBulk=tempBulk+2*np.pi*pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+    #                    else:
+    #                          tempBulk=tempBulk
+    #            Bulk[r]=tempBulk/((r_s**3)*Density[r])
 
-            plt.figure(figsize=(20,15))
-            plt.grid()
-            ax = plt.gca()
-            plt.rc('font', size=35)
-            plt.tick_params(labelsize=40)
-            plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-            ax.set_xlim([z[0],z[Nr-1]])
-            ax.set_ylim([min(Bulk),max(Bulk)])
-            ax.set_xlabel(r'$r/r_s$', fontsize=28)
-            ax.set_ylabel(r'$U/v_{Ae}$', fontsize=28)
-            plt.plot(z,Bulk,linewidth=3.0, color='k');
-            plt.savefig(f'{path_current}bulk/{k}.png')
-            plt.clf()
-            plt.close()
+    #        plt.figure(figsize=(20,15))
+    #        plt.grid()
+    #        ax = plt.gca()
+    #        plt.rc('font', size=35)
+    #        plt.tick_params(labelsize=40)
+    #        plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+    #        ax.set_xlim([z[0],z[Nr-1]])
+    #        ax.set_ylim([min(Bulk),max(Bulk)])
+    #        ax.set_xlabel(r'$r/r_s$', fontsize=28)
+    #        ax.set_ylabel(r'$U/v_{Ae}$', fontsize=28)
+    #        plt.plot(z,Bulk,linewidth=3.0, color='k');
+    #        plt.savefig(f'{path_current}bulk/{k}.png')
+    #        plt.clf()
+    #        plt.close()
             
             #Density=np.zeros(shape = (Nr))
             #for r in range(Nr):
@@ -870,34 +870,44 @@ for k in range(timestep):
             #plt.clf()
             #plt.close()
             
-    kl=kl+1
+    #kl=kl+1
     
-    #f_next[:,:]=f_1[:,:]
+    f_next[:,:]=f_1[:,:]
 
-    #Density_next=np.zeros(shape = (Nr))
-    #for r in range(Nr):
-    #    tempDensity=0
-    #    for j in range(Nv):
-    #        for i in range(Nv):
-    #            if per_v[j]<0:
-    #                  tempDensity=tempDensity
-    #            else:
-    #                  tempDensity=tempDensity+2*np.pi*f_next[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-    #    Density_next[r]=tempDensity/(r_s**3)
+    Density_next=np.zeros(shape = (Nr))
+    for r in range(Nr):
+        tempDensity=0
+        for j in range(Nv):
+            for i in range(Nv):
+                if per_v[j]<0:
+                      tempDensity=tempDensity
+                else:
+                      tempDensity=tempDensity+2*np.pi*f_next[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+        Density_next[r]=tempDensity/(r_s**3)
 
 
 
-    #Bulk_next=np.zeros(shape = (Nr))
-    #for r in range(Nr):
-    #    tempBulk=0
-    #    for j in range(Nv):
-    #        for i in range(Nv):
-    #            if per_v[j]>=0:
-    #                  tempBulk=tempBulk+2*np.pi*pal_v[i]*f_next[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-    #            else:
-    #                  tempBulk=tempBulk
-    #    Bulk_next[r]=tempBulk/((r_s**3)*Density_next[r])
+    Bulk_next=np.zeros(shape = (Nr))
+    for r in range(Nr):
+        tempBulk=0
+        for j in range(Nv):
+            for i in range(Nv):
+                if per_v[j]>=0:
+                      tempBulk=tempBulk+2*np.pi*pal_v[i]*f_next[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+                else:
+                      tempBulk=tempBulk
+        Bulk_next[r]=tempBulk/((r_s**3)*Density_next[r])
 
+    f_temp6=np.zeros(shape = (Nr*Nv**2, 1))
+    f_temp6[:,:]=f_1[:,:]
+    for r in range(Nr):
+        for j in range(Nv):
+            for i in range(Nv):
+                    if i==0 or i==Nv-1:
+                            f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]
+                    else:
+                            f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]-(Bulk_next[r]-Bulk_pre[r])*(1/(2*delv))*(f_temp6[r*(Nv)*(Nv)+j*Nv+i+1]-f_temp6[r*(Nv)*(Nv)+j*Nv+i-1])
+    
     #norm_bulk=0
     #for R in range(Nr):
     #        norm_bulk=norm_bulk+abs(Bulk_next[R]-Bulk_pre[R])**2
@@ -967,22 +977,22 @@ plt.savefig(f'{path_current}figure/norm.png')
 plt.clf()
 plt.close()
 
-o=np.linspace(1, timestep, timestep)
+#o=np.linspace(1, timestep, timestep)
 
-plt.figure(figsize=(20,15))
-plt.grid()
-ax = plt.gca()
-plt.rc('font', size=35)
-plt.tick_params(labelsize=40)
-plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
-ax.set_xlim([o[0],o[timestep-1]])
-ax.set_ylim([10**(-6),10**(-4)])
-ax.set_xlabel(r'$t$', fontsize=28)
-ax.set_ylabel(r'$norm_{bulk}$', fontsize=28)
-ax.plot(o,Normvalue_bulk,linewidth=3.0, color='k');
-plt.savefig(f'{path_current}figure/norm_bulk.png')
-plt.clf()
-plt.close()
+#plt.figure(figsize=(20,15))
+#plt.grid()
+#ax = plt.gca()
+#plt.rc('font', size=35)
+#plt.tick_params(labelsize=40)
+#plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
+#ax.set_xlim([o[0],o[timestep-1]])
+#ax.set_ylim([10**(-6),10**(-4)])
+#ax.set_xlabel(r'$t$', fontsize=28)
+#ax.set_ylabel(r'$norm_{bulk}$', fontsize=28)
+#ax.plot(o,Normvalue_bulk,linewidth=3.0, color='k');
+#plt.savefig(f'{path_current}figure/norm_bulk.png')
+#plt.clf()
+#plt.close()
 
 nu=delt*(1+k)
 for r in range(Nr):
