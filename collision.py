@@ -437,7 +437,7 @@ difference=np.zeros(shape = ((Nr)*(Nv)*(Nv), 1))
 
 
 
-nu=delt*(1+k)
+#nu=delt*(1+k)
 for r in range(Nr):
    for j in range(Nv):
        for i in range(Nv):
