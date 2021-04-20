@@ -704,8 +704,8 @@ for k in range(timestep):
 
     
            
-    #if kl==50:
-    #        kl=0
+    if kl==1:
+            kl=0
     #        Density=np.zeros(shape = (Nr))
     #        for r in range(Nr):
     #            tempDensity=0
@@ -796,42 +796,42 @@ for k in range(timestep):
             #plt.clf()
             #plt.close()
 
-            #nu=delt*(1+k)
-            #solu1=np.zeros(shape = (Nv, Nv))
-            #for j in range(Nv):
-            #    for i in range(Nv):
-            #            if f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
-            #                    solu1[j,i]=0
-            #            elif f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
-            #                    solu1[j,i]=np.log10(f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
-            #            else:
-            #                    solu1[j,i]=-10
-            #fig = plt.figure()
-            #fig.set_dpi(500)
-            #plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
-            #ax = plt.gca()
-            #ax.spines['left'].set_position('center')
-            #ax.spines['left'].set_smart_bounds(True)
-            #ax.spines['bottom'].set_position('zero')
-            #ax.spines['bottom'].set_smart_bounds(True)
-            #ax.spines['right'].set_color('none')
-            #ax.spines['top'].set_color('none')
-            #ax.xaxis.set_ticks_position('bottom')
-            #plt.axis('equal')
-            #ax.xaxis.set_ticks_position('bottom')
-            #ax.yaxis.set_ticks_position('left')
-            #plt.rc('font', size=8)
-            #plt.tick_params(labelsize=8)
-            #plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
-            #plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
-            #plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[10], fontsize=8)
-            #plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
-            #plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
-            #plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
-            #plt.colorbar(label=r'$Log(F/F_{MAX})$')
-            #plt.savefig(f'{path_current}r=10/{k}.png')
-            #plt.clf()
-            #plt.close()
+            nu=delt*(1+k)
+            solu1=np.zeros(shape = (Nv, Nv))
+            for j in range(Nv):
+                for i in range(Nv):
+                        if f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>1:
+                                solu1[j,i]=0
+                        elif f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1)>10**(-8):
+                                solu1[j,i]=np.log10(f_1[(10)*(Nv)*(Nv)+(j)*Nv+i]/np.max(f_1))
+                        else:
+                                solu1[j,i]=-10
+            fig = plt.figure()
+            fig.set_dpi(500)
+            plt.contourf(X2, Y2,solu1, cont_lev,cmap='Blues');
+            ax = plt.gca()
+            ax.spines['left'].set_position('center')
+            ax.spines['left'].set_smart_bounds(True)
+            ax.spines['bottom'].set_position('zero')
+            ax.spines['bottom'].set_smart_bounds(True)
+            ax.spines['right'].set_color('none')
+            ax.spines['top'].set_color('none')
+            ax.xaxis.set_ticks_position('bottom')
+            plt.axis('equal')
+            ax.xaxis.set_ticks_position('bottom')
+            ax.yaxis.set_ticks_position('left')
+            plt.rc('font', size=8)
+            plt.tick_params(labelsize=8)
+            plt.text(pal_v[Nv-1],-0.,r'$\mathcal{v}_\parallel/\mathcal{v}_{Ae0}$', fontsize=8)
+            plt.text(-0.,pal_v[Nv-1],r'$\mathcal{v}_\perp/\mathcal{v}_{Ae0}$', fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-3], r'$r/r_s=$' "%.2f" % z[10], fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-2], r'$T(\mathcal{v}_{Ae0}/r_s):$' "%.2f" % nu, fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-4], r'$Nv=$' "%.2f" % Nv, fontsize=8)
+            plt.text(pal_v[Nv-10],pal_v[Nv-5], r'$Nr=$' "%.2f" % Nr, fontsize=8)
+            plt.colorbar(label=r'$Log(F/F_{MAX})$')
+            plt.savefig(f'{path_current}r=10/{k}.png')
+            plt.clf()
+            plt.close()
 
             #nu=delt*(1+k)
             #solu1=np.zeros(shape = (Nv, Nv))
@@ -870,7 +870,7 @@ for k in range(timestep):
             #plt.clf()
             #plt.close()
             
-    #kl=kl+1
+    kl=kl+1
     
     f_next[:,:]=f_1[:,:]
 
