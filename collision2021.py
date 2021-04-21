@@ -79,10 +79,10 @@ def lnn(r):
         return -2/r
 
 def U_solar(r):
-        return U_f*(np.exp(r/40.)-np.exp(-r/40.))/(np.exp(r/40.)+np.exp(-r/40.)) 
+        return U_f*(np.exp(r/60.)-np.exp(-r/60.))/(np.exp(r/60.)+np.exp(-r/60.)) 
 
 def dU_solar(x):
-        return U_f*(1./40.)*(2./(np.exp(x/40.)+np.exp(-x/40.)))**2
+        return U_f*(1./60.)*(2./(np.exp(x/60.)+np.exp(-x/60.)))**2
 
 def cos(r):
         return (1/(1+(r*Omega/U_solar(r))**2)**0.5)
