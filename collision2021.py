@@ -614,8 +614,6 @@ for k in range(timestep):
     #            else:
     #                  tempBulk=tempBulk
     #    Bulk_pre[r]=tempBulk/((r_s**3)*Density_pre[r])
-    
-    f_1=dot(AQ, f_1)       
 
     Density=np.zeros(shape = (Nr))
     for r in range(Nr):
@@ -649,6 +647,10 @@ for k in range(timestep):
                       else:
                               temptemp=temptemp+2*np.pi*(per_v[j]**2)*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
            Temperature_per[r]=v_Ae_0**2*Me*temptemp/(2*(r_s**3)*Density[r]*Bol_k)
+    
+    f_1=dot(AQ, f_1)       
+
+    
 
     #Bulk_next=np.zeros(shape = (Nr))
     #for r in range(Nr):
