@@ -669,7 +669,7 @@ for k in range(timestep):
                     if r==0 or r==Nr-1 or i==0 or i==Nv-1:
                             f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]
                     else:
-                            f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]-(U_solar(z[r])*dU_solar(z[r])/cos(z[r])+U_solar(z[r])**2*dcos_1(z[r])+(cos(z[r])/v_Ae_0**2)*(Bol_k)/(Me*Density[r])*(Density[r+1]*Temperature_pal[r+1]-Density[r-1]*Temperature_pal[r-1])/(2*delz)+(cos(z[r])/v_Ae_0**2)*(Bol_k)/(2*Me)*dlnB(z[r])*Temperature_per[r]+(cos(z[r])/v_Ae_0**2)*(2*Bol_k)/(Me*z[r])*Temperature_pal[r])*(1/(2*delv))*(f_temp6[r*(Nv)*(Nv)+j*Nv+i+1]-f_temp6[r*(Nv)*(Nv)+j*Nv+i-1]) #f_temp6[r*(Nv)*(Nv)+j*Nv+i]-(2/(Density_next[r]+Density_pre[r]))*(Density_next[r]*Bulk_next[r]-Density_pre[r]*Bulk_pre[r])*(1/(2*delv))*(f_temp6[r*(Nv)*(Nv)+j*Nv+i+1]-f_temp6[r*(Nv)*(Nv)+j*Nv+i-1])
+                            f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]-(U_solar(z[r])*dU_solar(z[r])/cos(z[r])+U_solar(z[r])**2*dcos_1(z[r])+(cos(z[r])/v_Ae_0**2)*(Bol_k)/(Me*Density[r])*(Density[r+1]*Temperature_pal[r+1]-Density[r-1]*Temperature_pal[r-1])/(2*delz)+(cos(z[r])/v_Ae_0**2)*(Bol_k)/(2*Me)*dlnB(z[r])*Temperature_per[r]+(cos(z[r])/v_Ae_0**2)*(2*Bol_k)/(Me*z[r])*Temperature_pal[r])*(delt/(2*delv))*(f_temp6[r*(Nv)*(Nv)+j*Nv+i+1]-f_temp6[r*(Nv)*(Nv)+j*Nv+i-1]) #f_temp6[r*(Nv)*(Nv)+j*Nv+i]-(2/(Density_next[r]+Density_pre[r]))*(Density_next[r]*Bulk_next[r]-Density_pre[r]*Bulk_pre[r])*(1/(2*delv))*(f_temp6[r*(Nv)*(Nv)+j*Nv+i+1]-f_temp6[r*(Nv)*(Nv)+j*Nv+i-1])
 
 
 
