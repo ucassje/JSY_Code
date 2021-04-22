@@ -548,7 +548,7 @@ for a in range(Nr-1):
 	for b in range(Nr-1):
 		if a==b:
 			AAA[(a)*(Nv*Nv):(a+1)*(Nv*Nv),(b+1)*(Nv*Nv):(b+2)*(Nv*Nv)]=Matrix_alphaA(a)
-AAA_1 = inv(AAA)
+#AAA_1 = inv(AAA)
 del AAA
 
 
@@ -571,9 +571,9 @@ for a in range(Nr-1):
 		if a==b:
 			QQQ[(a+1)*(Nv*Nv):(a+2)*(Nv*Nv),(b)*(Nv*Nv):(b+1)*(Nv*Nv)]=Matrix_alphaA(a+1)
 
-AQ=dot(AAA_1,QQQ)
-del AAA_1
-del QQQ
+#AQ=dot(AAA_1,QQQ)
+#del AAA_1
+#del QQQ
 #np.set_printoptions(threshold=np.inf)
 #print(AQ)
 
@@ -651,7 +651,7 @@ for k in range(timestep):
                               temptemp=temptemp+2*np.pi*(per_v[j]**2)*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
            Temperature_per[r]=v_Ae_0**2*Me*temptemp/(2*(r_s**3)*Density[r]*Bol_k)
     
-    f_1=dot(AQ, f_1)       
+#    f_1=dot(AQ, f_1)       
 
     
 
