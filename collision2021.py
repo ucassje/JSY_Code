@@ -56,7 +56,7 @@ Fv=delt/delv
 Fvv=delt/(delv)**2
 Fz=delt/delz
 U_f=800000./v_Ae_0
-T_e=10*10**5; #5*(10**(5))
+T_e=15*10**5; #5*(10**(5))
 T_e_back=10*(10**(5));
 Bol_k=1.3807*(10**(-23));
 kappa=2
@@ -584,7 +584,7 @@ f_temp=np.zeros(shape = (Nr*Nv**2, 1))
 f_temp[:,:]=f_1[:,:]
 kl=50
 
-timestep=100 #700
+timestep=3000 #700
 Normvalue=np.zeros(shape = (timestep))
 Normvalue_bulk=np.zeros(shape = (timestep))
 for k in range(timestep):
