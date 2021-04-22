@@ -82,7 +82,7 @@ def U_solar(r):
         return U_f*(np.exp(r/20.)-np.exp(-r/20.))/(np.exp(r/20.)+np.exp(-r/20.)) 
 
 def dU_solar(x):
-        return 0#U_f*(1./20.)*(2./(np.exp(x/20.)+np.exp(-x/20.)))**2
+        return U_f*(1./20.)*(2./(np.exp(x/20.)+np.exp(-x/20.)))**2
 
 def cos(r):
         return (1/(1+(r*Omega/U_solar(r))**2)**0.5)
