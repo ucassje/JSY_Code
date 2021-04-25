@@ -25,6 +25,14 @@ path_current=path_home
 def U_solar(r):
         return U_f*(np.exp(r/20.)-np.exp(-r/20.))/(np.exp(r/20.)+np.exp(-r/20.)) 
 
+def U_solar3(r):
+        return U_f*(np.exp(r/10.)-np.exp(-r/10.))/(np.exp(r/10.)+np.exp(-r/10.)) 
+
+
+def U_solar2(r):
+        return 800*(1-np.exp(-(r-2.8)/25))**0.5 
+
+
 def B_0(r):
         return 10*(215/r)**2
 
@@ -85,6 +93,8 @@ plt.close()
 
 plt.figure(figsize=(20,15))
 plt.plot(z, U_solar(z), 'k', linewidth=3.0)
+plt.plot(z, U_solar2(z), 'r', linewidth=3.0)
+plt.plot(z, U_solar3(z), 'b', linewidth=3.0)
 plt.xlabel(r'$r/r_s$',fontsize=28)
 plt.ylabel('Wind Speed U [km/s]',fontsize=28)
 plt.grid()
