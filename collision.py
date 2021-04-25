@@ -141,34 +141,6 @@ for r in range(Nr):
                       tempBulk=tempBulk
    Bulk[r]=tempBulk/((r_s**3)*Density[r])
 
-for r in range(Nr):
-        for j in range(Nv):
-                for i in range(Nv):
-                        f_1[r*(Nv)*(Nv)+j*Nv+i]=(pal_v[i]-Bulk[r])/pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]
-
-Density=np.zeros(shape = (Nr))
-for r in range(Nr):
-   tempDensity=0
-   for j in range(Nv):
-      for i in range(Nv):
-              if per_v[j]<0:
-                      tempDensity=tempDensity
-              else:
-                      tempDensity=tempDensity+2*np.pi*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-   Density[r]=tempDensity/(r_s**3)
-
-
-
-Bulk=np.zeros(shape = (Nr))
-for r in range(Nr):
-   tempBulk=0
-   for j in range(Nv):
-      for i in range(Nv):
-              if per_v[j]<0:
-                      tempBulk=tempBulk+2*np.pi*pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-              else:
-                      tempBulk=tempBulk
-   Bulk[r]=tempBulk/((r_s**3)*Density[r])
 
 Temperature_pal=np.zeros(shape = (Nr))
 for r in range(Nr):
