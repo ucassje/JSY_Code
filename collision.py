@@ -115,7 +115,7 @@ def Kappa_Initial_Core(a,b,r):
    return (U_solar(z[0])/U_solar(r))*(r_s**3)*(n(r)*10**6)*(v_th_function(temperature(r))*v_th_function(temperature(r))**2)**(-1)*(2/(np.pi*(2*kappac-3)))**1.5*(gamma(kappac+1)/gamma(kappac-0.5))*(1.+(2/(2*kappac-3))*((b/v_th_function(temperature(r)))**2)+(2/(2*kappac-3))*((a/v_th_function(temperature(r)))**2))**(-kappac-1.) #(U_f/U_solar(r))*(r_s**3)*(n(r)*10**6)*(2*np.pi*kappa_v_th_function(temperature(r))**3*kappa**1.5)**(-1)*(gamma(kappa+1)/(gamma(kappa-0.5)*gamma(1.5)))*(1.+((b/kappa_v_th_function(temperature(r)))**2)/kappa+((a/kappa_v_th_function(temperature(r)))**2)/kappa)**(-kappa-1.)#+10**(-6)*(r_s**3)*(n(r)*10**6)*(np.pi**1.5*kappa_v_th_function(temperature(r))**3)**(-1)*(gamma(kappa+1)/(gamma(kappa-0.5)*kappa**1.5))*(1.+((b/(kappa_v_th_function(temperature(r))*100000))**2)/kappa+((a/(kappa_v_th_function(temperature(r))*100000))**2)/kappa)**(-kappa-1.) #(((7.5*10**9/r_s)/c)**2+0.05*np.exp(-(c-23)**2))*
 #(r_s**3)*(n(r)*10**6)/(v_th_function(temperature(r))**3*np.pi**(3/2))*np.exp(-a**2/v_th_function(temperature(r))**2-b**2/v_th_function(temperature(r))**2)
          
-f_1 = np.load('3000.npy')
+f_1 = np.load('data.npy')
 
 Density=np.zeros(shape = (Nr))
 for r in range(Nr):
@@ -141,7 +141,34 @@ for r in range(Nr):
                       tempBulk=tempBulk
    Bulk[r]=tempBulk/((r_s**3)*Density[r])
 
+for r in range(Nr):
+        for j in range(Nv):
+                for i in range(Nv):
+                        f_1[r*(Nv)*(Nv)+j*Nv+i]=(pal_v[i]-Bulk[r])/pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]
 
+Density=np.zeros(shape = (Nr))
+for r in range(Nr):
+   tempDensity=0
+   for j in range(Nv):
+      for i in range(Nv):
+              if per_v[j]<0:
+                      tempDensity=tempDensity
+              else:
+                      tempDensity=tempDensity+2*np.pi*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+   Density[r]=tempDensity/(r_s**3)
+
+
+
+Bulk=np.zeros(shape = (Nr))
+for r in range(Nr):
+   tempBulk=0
+   for j in range(Nv):
+      for i in range(Nv):
+              if per_v[j]<0:
+                      tempBulk=tempBulk+2*np.pi*pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+              else:
+                      tempBulk=tempBulk
+   Bulk[r]=tempBulk/((r_s**3)*Density[r])
 
 Temperature_pal=np.zeros(shape = (Nr))
 for r in range(Nr):
