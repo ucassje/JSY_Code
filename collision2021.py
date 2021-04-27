@@ -18,7 +18,7 @@ from lmfit import Parameters, fit_report, minimize
 #from lmfit import Model
 import lmfit
 
-Nv=30  #velocity step number
+Nv=36  #velocity step number
 i_solar_r=5 #10
 f_solar_r=20 #30
 path_home="/Users/user/Desktop/JSY_Code/"
@@ -644,40 +644,40 @@ for k in range(timestep):
     
     f_1=dot(AQ, f_1)       
 
-    Density_next=np.zeros(shape = (Nr))
-    for r in range(Nr):
-        tempDensity=0
-        for j in range(Nv):
-            for i in range(Nv):
-                if per_v[j]<0:
-                      tempDensity=tempDensity
-                else:
-                      tempDensity=tempDensity+2*np.pi*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-        Density_next[r]=tempDensity/(r_s**3)
+    #Density_next=np.zeros(shape = (Nr))
+    #for r in range(Nr):
+    #    tempDensity=0
+    #    for j in range(Nv):
+    #        for i in range(Nv):
+    #            if per_v[j]<0:
+    #                  tempDensity=tempDensity
+    #            else:
+    #                  tempDensity=tempDensity+2*np.pi*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+    #    Density_next[r]=tempDensity/(r_s**3)
 
 
 
-    Bulk_next=np.zeros(shape = (Nr))
-    for r in range(Nr):
-        tempBulk=0
-        for j in range(Nv):
-            for i in range(Nv):
-                if per_v[j]>=0:
-                      tempBulk=tempBulk+2*np.pi*pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
-                else:
-                      tempBulk=tempBulk
-        Bulk_next[r]=tempBulk/((r_s**3)*Density_next[r])
+    #Bulk_next=np.zeros(shape = (Nr))
+    #for r in range(Nr):
+    #    tempBulk=0
+    #    for j in range(Nv):
+    #        for i in range(Nv):
+    #            if per_v[j]>=0:
+    #                  tempBulk=tempBulk+2*np.pi*pal_v[i]*f_1[r*(Nv)*(Nv)+j*Nv+i]*abs(per_v[j])*(pal_v[1]-pal_v[0])**2
+    #            else:
+    #                  tempBulk=tempBulk
+    #    Bulk_next[r]=tempBulk/((r_s**3)*Density_next[r])
 
     
-    f_temp6=np.zeros(shape = (Nr*Nv**2, 1))
-    f_temp6[:,:]=f_1[:,:]
-    for r in range(Nr):
-        for j in range(Nv):
-            for i in range(Nv):
-                    if abs(pal_v[i])<0.05:
-                            f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]
-                    else:
-                            f_1[r*(Nv)*(Nv)+j*Nv+i]=(pal_v[i]-Bulk_next[r])/pal_v[i]*f_temp6[r*(Nv)*(Nv)+j*Nv+i]
+    #f_temp6=np.zeros(shape = (Nr*Nv**2, 1))
+    #f_temp6[:,:]=f_1[:,:]
+    #for r in range(Nr):
+    #    for j in range(Nv):
+    #        for i in range(Nv):
+    #                if abs(pal_v[i])<0.05:
+    #                        f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]
+    #                else:
+    #                        f_1[r*(Nv)*(Nv)+j*Nv+i]=(pal_v[i]-Bulk_next[r])/pal_v[i]*f_temp6[r*(Nv)*(Nv)+j*Nv+i]
 
 
     f_temp4=np.zeros(shape = (Nr*Nv**2, 1))
