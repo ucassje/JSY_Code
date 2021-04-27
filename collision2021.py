@@ -674,7 +674,7 @@ for k in range(timestep):
     for r in range(Nr):
         for j in range(Nv):
             for i in range(Nv):
-                    if abs(pal_v[i])<0.2:
+                    if abs(pal_v[i])<0.05:
                             f_1[r*(Nv)*(Nv)+j*Nv+i]=f_temp6[r*(Nv)*(Nv)+j*Nv+i]
                     else:
                             f_1[r*(Nv)*(Nv)+j*Nv+i]=(pal_v[i]-Bulk_next[r])/pal_v[i]*f_temp6[r*(Nv)*(Nv)+j*Nv+i]
