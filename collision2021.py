@@ -79,10 +79,10 @@ def lnn(r):
         return -2/r
 
 def U_solar(r):
-        return U_f#*(np.exp(r/5.)-np.exp(-r/5.))/(np.exp(r/5.)+np.exp(-r/5.)) 
+        return U_f*(np.exp(r/10.)-np.exp(-r/10.))/(np.exp(r/10.)+np.exp(-r/10.)) 
 
 def dU_solar(x):
-        return 0#U_f*(1./5.)*(2./(np.exp(x/5.)+np.exp(-x/5.)))**2
+        return U_f*(1./10.)*(2./(np.exp(x/10.)+np.exp(-x/10.)))**2
 
 def cos(r):
         return (1/(1+(r*Omega/U_solar(r))**2)**0.5)
@@ -584,7 +584,7 @@ f_temp=np.zeros(shape = (Nr*Nv**2, 1))
 f_temp[:,:]=f_1[:,:]
 kl=50
 
-timestep=3000 #700
+timestep=100 #700
 Normvalue=np.zeros(shape = (timestep))
 Normvalue_bulk=np.zeros(shape = (timestep))
 for k in range(timestep):
