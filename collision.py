@@ -399,7 +399,7 @@ def electric(x):
         for r in range(Nr):
                 if abs(x-z[r])<0.5*delz:
                         l=r
-        return U_solar(x)*dU_solar(x)/(cos(x)**2)+(U_solar(x)**2/cos(x))*dcos_1(x)+(1/v_Ae_0**2)*(Bol_k)/(Me*n(x))*(n(x)*temperature(x)*lntemperature(x)+temperature(x)*n(x)*lnn(x))-(1/v_Ae_0**2)*(Bol_k)/(2*Me)*dlnB(x)*temperature(x)+(1/v_Ae_0**2)*(Bol_k)/(2*Me)*dlnB(x)*temperature(x)+(1/v_Ae_0**2)*(2*Bol_k)/(Me*x)*temperature(x)-(1/Density_next[l])*(Density_next[l]*Bulk_next[l]-Density_pre[l]*Bulk_pre[l])/(10*delt)
+        return U_solar(x)*dU_solar(x)/(cos(x)**2)+(U_solar(x)**2/cos(x))*dcos_1(x)+(1/v_Ae_0**2)*(Bol_k)/(Me*n(x))*(n(x)*temperature(x)*lntemperature(x)+temperature(x)*n(x)*lnn(x))-(1/v_Ae_0**2)*(Bol_k)/(2*Me)*dlnB(x)*temperature(x)+(1/v_Ae_0**2)*(Bol_k)/(2*Me)*dlnB(x)*temperature(x)+(1/v_Ae_0**2)*(2*Bol_k)/(Me*x)*temperature(x)+(1/Density_next[l])*(Density_next[l]*Bulk_next[l]-Density_pre[l]*Bulk_pre[l])/(10*delt)
 
 #for R in range(Nr):
 #        print(electric(z[R]))
