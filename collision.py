@@ -81,7 +81,7 @@ def lnn(r):
 
 
 def dU_solar(x):
-        return U_f*(1./20.)*(2./(np.exp(x/20.)+np.exp(-x/20.)))**2
+        return U_f*(1./10.)*(2./(np.exp(x/10.)+np.exp(-x/10.)))**2
 
 def cos(r):
         return (1/(1+(r*Omega/U_solar(r))**2)**0.5)

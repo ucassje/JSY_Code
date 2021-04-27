@@ -584,6 +584,8 @@ f_temp=np.zeros(shape = (Nr*Nv**2, 1))
 f_temp[:,:]=f_1[:,:]
 kl=50
 
+np.save('data_pre.npy', f_1)
+
 timestep=10 #700
 Normvalue=np.zeros(shape = (timestep))
 Normvalue_bulk=np.zeros(shape = (timestep))
@@ -952,7 +954,7 @@ for k in range(timestep):
 
 
 
-np.save('data.npy', f_1)
+np.save('data_next.npy', f_1)
 
 
 X2,Y2 = np.meshgrid(pal_v,per_v)
