@@ -26,12 +26,12 @@ path_lab="/disk/plasma4/syj2/Code/JSY_Code/JSY_Code/"
 # path_current=path_home
 path_current=path_lab
 def n_0(r):
-        return 10*(215/r)**2
+        return 1*(215/r)**2
 
 def B_0(r):
         return 10*(215/r)**2
 
-v_Ae_0=(B_0(215)*10**(-9))/(4.*np.pi*10**(-7)*9.1094*10**(-31)*n_0(215)*10**6)**0.5
+v_Ae_0=(B_0(215)*10**(-9))/(4.*np.pi*10**(-7)*9.1094*10**(-31)*10*n_0(215)*10**6)**0.5
 print(v_Ae_0)
 q=1.6022*(10**(-19))
 Me=9.1094*(10**(-31))
@@ -176,7 +176,7 @@ d_pal_po_per_po=np.zeros(shape = (Nr, 1))
 for r in range(Nr):
         d_pal_po_per_po[r]=abs(f_1[r*(Nv)*(Nv)+(Nv-1)*Nv+Nv-1]/f_1[r*(Nv)*(Nv)+(Nv-2)*Nv+Nv-2])#abs(f_1[r*(Nv)*(Nv)+(Nv-1)*Nv+Nv-1]-f_1[r*(Nv)*(Nv)+(Nv-2)*Nv+Nv-2])
                 
-Col=0#4*np.pi/(r_s**2*v_Ae_0**4)*(q**2/(4*np.pi*epsilon*Me))**2*25
+Col=4*np.pi/(r_s**2*v_Ae_0**4)*(q**2/(4*np.pi*epsilon*Me))**2*25
 
 def Collision_Core(a,b,r):
     kappa=50.
