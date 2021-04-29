@@ -571,7 +571,7 @@ for a in range(Nr-1):
 		if a==b:
 			QQQ[(a+1)*(Nv*Nv):(a+2)*(Nv*Nv),(b)*(Nv*Nv):(b+1)*(Nv*Nv)]=Matrix_alphaA(a+1)
 
-AQ=dot(inv(AAA),QQQ)
+AQ=dot(AAA_1,QQQ)
 del AAA_1
 del QQQ
 #np.set_printoptions(threshold=np.inf)
