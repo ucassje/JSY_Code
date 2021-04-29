@@ -549,9 +549,8 @@ for a in range(Nr-1):
 	for b in range(Nr-1):
 		if a==b:
 			AAA[(a)*(Nv*Nv):(a+1)*(Nv*Nv),(b+1)*(Nv*Nv):(b+2)*(Nv*Nv)]=Matrix_alphaA(a)
-#AAA_1 = inv(AAA)
-#del AAA
-np.save('AAA.npy', AAA)
+AAA_1 = inv(AAA)
+del AAA
 
 QQQ=np.zeros(((Nr)*(Nv)**2,(Nr)*(Nv)**2))
 
