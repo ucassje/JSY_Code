@@ -18,7 +18,7 @@ from lmfit import Parameters, fit_report, minimize
 #from lmfit import Model
 import lmfit
 
-Nv=30  #velocity step number
+Nv=50  #velocity step number
 i_solar_r=5 #10
 f_solar_r=20 #30
 path_home="/Users/user/Desktop/JSY_Code/"
@@ -43,7 +43,7 @@ pal_v = np.linspace(-Mv, Mv, Nv)
 per_v = np.linspace(-Mv, Mv, Nv)
 delv=pal_v[1]-pal_v[0]
 print(delv)
-Nr=50      #radial step number
+Nr=30      #radial step number
 r_s=696340000.
 z=np.linspace(i_solar_r, f_solar_r, Nr)
 delz=z[1]-z[0]
@@ -549,9 +549,9 @@ for a in range(Nr-1):
 	for b in range(Nr-1):
 		if a==b:
 			AAA[(a)*(Nv*Nv):(a+1)*(Nv*Nv),(b+1)*(Nv*Nv):(b+2)*(Nv*Nv)]=Matrix_alphaA(a)
-AAA_1 = inv(AAA)
-del AAA
-print(AAA)
+#AAA_1 = inv(AAA)
+#del AAA
+
 
 QQQ=np.zeros(((Nr)*(Nv)**2,(Nr)*(Nv)**2))
 
@@ -572,7 +572,7 @@ for a in range(Nr-1):
 		if a==b:
 			QQQ[(a+1)*(Nv*Nv):(a+2)*(Nv*Nv),(b)*(Nv*Nv):(b+1)*(Nv*Nv)]=Matrix_alphaA(a+1)
 
-AQ=dot(AAA_1,QQQ)
+AQ=dot(inv(AAA),QQQ)
 del AAA_1
 del QQQ
 #np.set_printoptions(threshold=np.inf)
